@@ -6,6 +6,6 @@
         public string Name { get; set; }
 
         // Navigation property
-        public virtual ICollection<PostTag> PostTags { get; set; }
+        
     }
 }
