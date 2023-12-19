@@ -1,24 +1,24 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ForumSystem.Models
 {
     public class Comment
     {
         [Key]
-        [NotNull]
-        public int CommentID { get; set; }
-        [Key]
-        [NotNull]
-        public int PostID { get; set; } // Foreign Key
+        
+        public int ? CommentID { get; set; }
+        [ForeignKey("postID")]
+        
+        public int ? PostID { get; set; } // Foreign Key
         public virtual Post Post { get; set; }
-        [Key]
-        [NotNull]
-        public int UserID { get; set; } // Foreign Key
-        public User User { get; set; }
-        [NotNull]
-        public string Content { get; set; }
-        [NotNull]
+        [ForeignKey("userID")]
+        
+        public int ? UserID { get; set; } // Foreign Key
+        public User  User { get; set; }
+      
+        public string ? Content { get; set; }
+  
         public DateTime CommentDate { get; set; }
 
         

@@ -1,21 +1,21 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ForumSystem.Models
 {
     public class Post
     {
-        [NotNull]
-        public int PostID { get; set; }
-        [Key]
-        [NotNull]
-        public int UserID { get; set; } // Foreign Key
+        
+        public int ? PostID { get; set; }
+        [ForeignKey("userID")]
+        
+        public int ? UserID { get; set; } // Foreign Key
         public User User { get; set; }
-        [NotNull]
-        public string Title { get; set; }
-        [NotNull]
-        public string Content { get; set; }
-        [NotNull]
+        
+        public string ? Title { get; set; }
+       
+        public string ? Content { get; set; }
+        
         public DateTime PostDate { get; set; }
 
         
