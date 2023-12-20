@@ -1,4 +1,5 @@
 using ForumSystem.Data;
+using ForumSystem.Repositories;
 using ForumSystem.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -17,6 +18,10 @@ namespace ForumSystem
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
                 options.EnableSensitiveDataLogging();
             });
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+            builder.Services.AddScoped<IPostRepository, PostRepository>();
+
             builder.Services.AddScoped<IForumDataService, ForumDataService>();
 
             var app = builder.Build();
