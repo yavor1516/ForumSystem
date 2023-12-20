@@ -6,6 +6,7 @@ namespace ForumSystem.Repositories
     public interface IPostRepository
     {
         public Post GetPostByPostId(int id);
+        public bool PostExists(string title);//to ask
         public ICollection<Post> GetAllPosts { get; }
         public Post CreatePost(Post post);
         public Post Update(int id, Post post);
