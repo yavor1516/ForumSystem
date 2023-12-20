@@ -21,9 +21,11 @@ namespace ForumSystem.Models
         
         public int UpVote { get; set; }
         public int DownVote { get; set; }
+        public bool IsActive {  get; set; }//for migration
+        public bool IsPublic {  get; set; }//for migration
 
         // Navigation properties
-       // public virtual User User { get; set; }
+        // public virtual User User { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
     }
 }
