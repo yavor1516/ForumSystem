@@ -4,7 +4,7 @@ namespace ForumSystem.Repositories
 {
     public interface ICommentRepository
     {
-        public Comment GetById(int id);
+        public Comment GetCommentById(int id);
         public ICollection<Comment> GetAllComments();
         public Comment CreateComment(Comment comment);
         public Comment UpdateComment(int id,Comment comment);
