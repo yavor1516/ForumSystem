@@ -60,7 +60,7 @@ namespace ForumSystem.Repositories
         {
             User userToUpdate=GetUserById(id);
             userToUpdate.IsAdmin = user.IsAdmin;
-            _dbcontext.Update(userToUpdate);
+          //  _dbcontext.Update(userToUpdate);
             _dbcontext.SaveChanges();
             return userToUpdate;
         }

@@ -2,6 +2,7 @@
 using ForumSystem.Models;
 using ForumSystem.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Text;
 
 namespace ForumSystem.Controllers
 {
@@ -16,13 +17,13 @@ namespace ForumSystem.Controllers
             _forumDataService = forumDataService;
         }
         [HttpGet("{id}")]
-        public IActionResult GetPostLikesById(int id)
+        public IActionResult DeletePostById(int id)
         {
-            try
-            {
-                var upvotes = _forumDataService.GetPostById(id).UpVote;
 
-                return Ok(upvotes);
+            try
+            {                
+                _forumDataService.DeletePost(id);                
+                return Ok("We did it"); 
             }
             catch (EntityNotFountException e)
             {
@@ -30,22 +31,30 @@ namespace ForumSystem.Controllers
             }
         }
 
-        //[HttpGet("")]
-        //public IActionResult ShowFeed()
-        //{
-        //    var comment = new Comment();
-        //    comment.Content = "kurchio";
-        //    var text = comment.Content;
-        //    try
-        //    {
-        //        return Ok(text);
-        //    }
-        //    catch (EntityNotFountException ex)
-        //    {
-
-        //        return NotFound(ex.Message);
-        //    }
+        [HttpGet("")]
+        public IActionResult ShowFeed()
+        {
+            var posts =_forumDataService.ShowAllPosts();
+            string text = "koment";
+            foreach (var item in posts)
+            {
+                text += item.Title;
+                text += item.Content;
+                foreach (var comment in item.Comments)
+                {
+                    text += comment.Content;
+                }                
+            }            
+            try
+            {
+                return Ok(text);
+            }
+            catch (EntityNotFountException ex)
+            {
+                
+              return NotFound(ex.Message);
+            }
             
-        //}
+        }
     }
 }

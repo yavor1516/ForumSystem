@@ -165,6 +165,8 @@ namespace ForumSystem.Data
             PostDate = DateTime.Now.AddDays(-10),
             UpVote = 20,
             DownVote = 5,
+             IsPublic = true,
+            IsActive = true,
         },
         new Post
         {
@@ -174,6 +176,8 @@ namespace ForumSystem.Data
             PostDate = DateTime.Now.AddDays(-9),
             UpVote = 15,
             DownVote = 3,
+             IsPublic = true,
+            IsActive = true,
         },
         new Post
         {
@@ -183,6 +187,8 @@ namespace ForumSystem.Data
             PostDate = DateTime.Now.AddDays(-8),
             UpVote = 18,
             DownVote = 7,
+            IsPublic = true,
+            IsActive = true,
         },
     };
 

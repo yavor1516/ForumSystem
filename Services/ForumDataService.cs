@@ -1,45 +1,27 @@
 ﻿using ForumSystem.Exceptions;
 using ForumSystem.Models;
+using ForumSystem.Repositories;
+using Microsoft.Extensions.Options;
 
 namespace ForumSystem.Services
 {
     public class ForumDataService : IForumDataService
     {
-        private readonly ForumContext _dbContext;
+        private readonly IPostRepository _postRepository;
 
-        public ForumDataService(ForumContext dbContext)
+        public ForumDataService(IPostRepository postRepository)
         {
-            _dbContext = dbContext;
+            _postRepository = postRepository;
         }
 
-        public ICollection<Comment> GetAllComments()
+        public void DeletePost(int id)
         {
-            return _dbContext.Comments.ToList();
-        }
+            _postRepository.DeletePost(id);
+        }      
 
-        public ICollection<Post> GetAllPosts(DateTime timeAgo)
+        public ICollection<Post> ShowAllPosts()
         {
-            return _dbContext.Posts.ToList();
-        }
-
-        public ICollection<User> GetAllUsers()
-        {
-            return _dbContext.Users.ToList();
-        }
-
-        public Comment GetCommentById(int id)
-        {
-            return _dbContext.Comments.FirstOrDefault(x => x.CommentID == id);
-        }
-
-        public Post GetPostById(int id)
-        {
-            return _dbContext.Posts.FirstOrDefault(x => x.PostID == id);
-        }
-
-        public User GetUserById(int id)
-        {
-            return _dbContext.Users.FirstOrDefault(x => x.UserID == id);
+            return _postRepository.GetAllPosts(); 
         }
     }
 }

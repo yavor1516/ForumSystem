@@ -26,6 +26,6 @@ namespace ForumSystem.Models
 
         // Navigation properties
         // public virtual User User { get; set; }
-        public virtual ICollection<Comment> Comments { get; set; }
+        public ICollection<Comment> Comments { get; set; }
     }
 }
