@@ -8,6 +8,7 @@ namespace ForumSystem.Models.DTO
         public int UserId { get; set; }
 
         [Required(AllowEmptyStrings = false)]
+        [MinLength(1, ErrorMessage = "The {0} field must be more than {1} characters.")]
         [MaxLength(20, ErrorMessage = "The {0} field must be less than {1} characters.")]
         public string Username { get; set; }
 
