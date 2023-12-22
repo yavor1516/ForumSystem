@@ -26,6 +26,7 @@ namespace ForumSystem
             builder.Services.AddScoped<IForumDataService, ForumDataService>();
 
             builder.Services.AddScoped<IModelMapper, ModelMapper>();
+            builder.Services.AddScoped<IEditPostService, EditPostService>();
             var app = builder.Build();
 
             //Here we fill DB with information for testing

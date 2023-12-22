@@ -20,7 +20,7 @@ namespace ForumSystem.Controllers
             _modelMapper = modelMapper;
         }
         [HttpGet("{id}")]
-        public IActionResult DeletePostById(int id)
+        public IActionResult DeleteUserById(int id)
         {
              
             try

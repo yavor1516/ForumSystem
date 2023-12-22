@@ -11,7 +11,5 @@ namespace ForumSystem.Repositories
         public Post CreatePost(Post post);
         public Post Update(int id, Post post);
         public void DeletePost(int id);
-       
-
     }
 }

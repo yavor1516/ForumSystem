@@ -30,5 +30,14 @@ namespace ForumSystem.Helpers
                 PhoneNumber = userModel.phoneNumber
             };
         }
+        public Post MapPost(PostDto dto)
+        {
+            var post = new Post
+            {
+                Title = dto.Title,
+                Content = dto.Content
+            };
+            return post;
+        }
     }
 }

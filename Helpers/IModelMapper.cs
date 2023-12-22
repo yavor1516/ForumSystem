@@ -7,5 +7,6 @@ namespace ForumSystem.Helpers
     {
         User MapUser(UserDto dto);
         UserResponseDto MapUser(User userModel);
+        Post MapPost(PostDto dto);
     }
 }

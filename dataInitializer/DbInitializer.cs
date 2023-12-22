@@ -17,7 +17,7 @@ namespace ForumSystem.Data
             }
 
             var users = new[]
- {
+ { 
     new User
     {
         Username = "john_doe",
