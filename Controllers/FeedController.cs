@@ -1,5 +1,7 @@
 ﻿using ForumSystem.Exceptions;
+using ForumSystem.Helpers;
 using ForumSystem.Models;
+using ForumSystem.Models.DTO;
 using ForumSystem.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
@@ -11,19 +13,24 @@ namespace ForumSystem.Controllers
     public class FeedController : ControllerBase
     {
         private readonly IForumDataService _forumDataService;
-
-        public FeedController(IForumDataService forumDataService)
+        private readonly IModelMapper _modelMapper;
+        public FeedController(IForumDataService forumDataService , IModelMapper modelMapper)
         {
             _forumDataService = forumDataService;
+            _modelMapper = modelMapper;
         }
         [HttpGet("{id}")]
         public IActionResult DeletePostById(int id)
         {
-
+             
             try
-            {                
-                _forumDataService.DeletePost(id);                
-                return Ok("We did it"); 
+            {
+                User user = _forumDataService.GetUserById(id);
+                UserResponseDto userResponseDto = _modelMapper.MapUser(user);
+                userResponseDto.posts = _forumDataService.ShowAllPosts().Where(x=>x.UserID == userResponseDto.UserID).ToList();
+                return Ok(userResponseDto.posts);
+                //_forumDataService.DeletePost(id);                
+                //return Ok("We did it"); 
             }
             catch (EntityNotFountException e)
             {

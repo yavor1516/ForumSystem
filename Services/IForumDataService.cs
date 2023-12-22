@@ -6,6 +6,7 @@ namespace ForumSystem.Services
     {
      public void DeletePost(int id);        
      public ICollection<Post> ShowAllPosts();
+        public User GetUserById(int id);
      
     }
 }

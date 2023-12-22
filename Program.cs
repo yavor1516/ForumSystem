@@ -1,4 +1,5 @@
 using ForumSystem.Data;
+using ForumSystem.Helpers;
 using ForumSystem.Repositories;
 using ForumSystem.Services;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,7 @@ namespace ForumSystem
 
             builder.Services.AddScoped<IForumDataService, ForumDataService>();
 
+            builder.Services.AddScoped<IModelMapper, ModelMapper>();
             var app = builder.Build();
 
             //Here we fill DB with information for testing
