@@ -35,7 +35,8 @@ namespace ForumSystem.Repositories
         public User GetUserByEmail(string email)
         {
             User user = _dbcontext.Users.FirstOrDefault(x => x.Email == email);
-            return user ?? throw new EntityNotFountException($"User with Email ={email} doesn't exist.");
+            return user;
+                        //?? throw new EntityNotFountException($"User with Email ={email} doesn't exist.");
         }
 
         public User GetUserByFirstName(string firstName)
@@ -53,7 +54,8 @@ namespace ForumSystem.Repositories
         public User GetUserByUsername(string username)
         {
             User user = _dbcontext.Users.FirstOrDefault(x => x.Username == username);
-            return user ?? throw new EntityNotFountException($"User with Username={username} doesn't exist");
+            return user;
+                        //?? throw new EntityNotFountException($"User with Username={username} doesn't exist");
         }
 
         public User UpdateUserAdmin(int id, User user) //???????

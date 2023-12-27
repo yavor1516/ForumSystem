@@ -4,7 +4,7 @@ namespace ForumSystem.Models.DTO
 {
     public class UserDto
     {
-        [Required]
+ 
         public int UserId { get; set; }
 
         [Required(AllowEmptyStrings = false)]
@@ -26,7 +26,9 @@ namespace ForumSystem.Models.DTO
         [MaxLength(32, ErrorMessage = "The {0} field must be less than {1} characters.")]
         public string LastName { get; set; }
 
-       
+        [Required]
+        public string Password { get; set; }
+
     }
 
 

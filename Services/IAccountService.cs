@@ -4,8 +4,10 @@ namespace ForumSystem.Services
 {
     public interface IAccountService
     {
-       public User Register(User user);
-       public User Login (User user);
+       public User GetByEmail (string email);
+       public User GetByUsername (string username);
+
+       public User CreateUser (User user);
 
     }
 }

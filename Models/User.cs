@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ForumSystem.Models
 {
@@ -28,7 +29,8 @@ namespace ForumSystem.Models
         public bool IsAdmin { get; set; }
         public bool isOnline { get; set; }
         public bool isBlocked { get; set; }
-        public string phoneNumber { get; set; }
+        [AllowNull]
+        public string ? phoneNumber { get; set; } // This property allows nulls
         public DateTime RegistrationDate { get; set; }
         public virtual ICollection<Post> Posts { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }

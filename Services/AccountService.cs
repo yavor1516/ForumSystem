@@ -10,14 +10,20 @@ namespace ForumSystem.Services
         {
             _userRepository = userRepository;
         }
-        public User Login(User user)
-        {
-            return user; //TODO
-        }
 
-        public User Register(User user)
+        public User CreateUser(User user)
         {
             return _userRepository.CreateUser(user);
+        }
+
+        public User GetByEmail(string email)
+        {
+            return _userRepository.GetUserByEmail(email);
+        }
+
+        public User GetByUsername(string username)
+        {
+            return _userRepository.GetUserByUsername(username);
         }
     }
 }
