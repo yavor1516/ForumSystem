@@ -2,6 +2,7 @@ using ForumSystem.Data;
 using ForumSystem.Helpers;
 using ForumSystem.Repositories;
 using ForumSystem.Services;
+using ForumSystem.Services.TokenGenerator;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -19,6 +20,8 @@ namespace ForumSystem
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
                 options.EnableSensitiveDataLogging();
             });
+           // //////////////////////////builder.Configuration.
+
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<ICommentRepository, CommentRepository>();
             builder.Services.AddScoped<IPostRepository, PostRepository>();
@@ -26,6 +29,7 @@ namespace ForumSystem
             builder.Services.AddScoped<IForumDataService, ForumDataService>();
 
             builder.Services.AddScoped<IModelMapper, ModelMapper>();
+            builder.Services.AddSingleton<AccessTokenGenerator>();
             builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
             builder.Services.AddScoped<IEditPostService, EditPostService>();
             builder.Services.AddScoped<IAccountService, AccountService>();
