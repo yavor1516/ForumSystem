@@ -26,7 +26,9 @@ namespace ForumSystem.Controllers
         [HttpPost("register")]
         public IActionResult Register([FromBody] UserDto registerRequest)
         {
-           if(!ModelState.IsValid)
+            // authService.Reigster(registerRequest.Username, registerRequest.Password);
+            //authService.Reigster(UserDto);
+            if (!ModelState.IsValid)
             {
                 IEnumerable<string> errorMessages = ModelState.Values.SelectMany(u => u.Errors.Select(e => e.ErrorMessage));
                 return BadRequest(new ErrorResponse(errorMessages));

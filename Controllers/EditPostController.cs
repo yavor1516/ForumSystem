@@ -4,10 +4,13 @@ using ForumSystem.Models.DTO;
 using ForumSystem.Models;
 using ForumSystem.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace ForumSystem.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("/feed/edit")]
     public class EditPostController:ControllerBase
     {
@@ -18,13 +21,19 @@ namespace ForumSystem.Controllers
             _editPostService = editPostService;
             _modelMapper = modelMapper;
         }
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public IActionResult DeletePostById(int id)
-        {
+        { 
             try
             {
-                _editPostService.DeletePost(id);
-                return Ok(new { message = "Post deleted successfully." });
+                var user = User.FindFirst(ClaimTypes.Name)?.Value;
+              if (user != null && _editPostService.GetPostById(id).User.Username == user.ToString())
+                {
+                    _editPostService.DeletePost(id);
+                    return Ok(new { message = "Post deleted successfully." });
+                }
+                return Unauthorized();
             }
             catch (Exception ex)
             {

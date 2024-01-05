@@ -159,7 +159,7 @@ namespace ForumSystem.Data
                 {
         new Post
         {
-            UserID = 1,
+            UserID = 11,
             Title = "First Post",
             Content = "This is the content of the first post.",
             PostDate = DateTime.Now.AddDays(-10),

@@ -9,9 +9,16 @@ namespace ForumSystem.Services.TokenGenerator
 {
     public class AccessTokenGenerator
     {
+        private readonly AuthenticationConfiguration _configuration;
+
+        public AccessTokenGenerator(AuthenticationConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         public string GenerateToken(User user)
         {
-            SecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("2HBn8feBYdw7MoYrN5TjVo80Px4dRWV3KZyhIVwumJtgBXXa1x4feQKkVuIqDWI7_v9kUlgGzerPB5iVfIUj9h_s6Rvp_jdlgmBLLMm9TkPgFhiLFxZ6n7BzhTSEa7zLDZvwZETggVqv5GWZNPUdMVL-yfJ4cM7UKVejVlK0eVk"));
+            SecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.AccessTokenSecret));
             SigningCredentials credentials = new SigningCredentials(key,SecurityAlgorithms.HmacSha256);
             List<Claim> claims = new List<Claim>()
             {
@@ -21,11 +28,11 @@ namespace ForumSystem.Services.TokenGenerator
                  new Claim(ClaimTypes.Role,user.IsAdmin.ToString()),
 
             };
-            JwtSecurityToken token = new JwtSecurityToken("http://localhost:5272",
-                "http://localhost:5272",
+            JwtSecurityToken token = new JwtSecurityToken(_configuration.Issuer,
+                _configuration.Audience,
                 claims,
                 DateTime.UtcNow,
-                DateTime.UtcNow.AddMinutes(30),
+                DateTime.UtcNow.AddMinutes(_configuration.AccessTokenExpirationMinutes),
                 credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);

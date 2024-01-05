@@ -12,10 +12,11 @@ namespace ForumSystem.Repositories
         {
             _dbcontext = dbcontext;
         }
-
+        //
+        //IQueryable<Post>
         public ICollection<Post> GetAllPosts()
         {
-            return _dbcontext.Posts.Include(p => p.Comments).ToList();
+            return _dbcontext.Posts.Include(p => p.Comments).Include(u=>u.User).ToList();
         }
 
         public Post CreatePost(Post post)
@@ -37,7 +38,10 @@ namespace ForumSystem.Repositories
 
         public Post GetPostByPostId(int id)
         {
-            var post = _dbcontext.Posts.FirstOrDefault(x => x.PostID == id);
+            var db = _dbcontext.Posts.Include(p => p.Comments).ThenInclude(u => u.User).ToList();
+            var post = db.FirstOrDefault(x => x.PostID == id);
+           
+           
             return post ?? throw new EntityNotFountException($"Post with ID {id} doesn't exist.");
         }
 

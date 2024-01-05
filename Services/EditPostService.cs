@@ -29,5 +29,10 @@ namespace ForumSystem.Services
         {
             _postRepository.DeletePost(id);
         }
+
+        public Post GetPostById(int id)
+        {
+            return _postRepository.GetPostByPostId(id);
+        }
     }
 }
