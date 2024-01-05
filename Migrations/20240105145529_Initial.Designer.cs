@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ForumSystem.Migrations
 {
     [DbContext(typeof(ForumContext))]
-    [Migration("20231219134712_Initial")]
+    [Migration("20240105145529_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -66,6 +66,12 @@ namespace ForumSystem.Migrations
 
                     b.Property<int>("DownVote")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPublic")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("PostDate")
                         .HasColumnType("datetime2");
@@ -127,7 +133,6 @@ namespace ForumSystem.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("phoneNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserID");

@@ -23,7 +23,7 @@ namespace ForumSystem.Migrations
                     IsAdmin = table.Column<bool>(type: "bit", nullable: false),
                     isOnline = table.Column<bool>(type: "bit", nullable: false),
                     isBlocked = table.Column<bool>(type: "bit", nullable: false),
-                    phoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    phoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RegistrationDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -42,7 +42,9 @@ namespace ForumSystem.Migrations
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PostDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpVote = table.Column<int>(type: "int", nullable: false),
-                    DownVote = table.Column<int>(type: "int", nullable: false)
+                    DownVote = table.Column<int>(type: "int", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    IsPublic = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {

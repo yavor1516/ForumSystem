@@ -2,6 +2,10 @@ using ForumSystem.Data;
 using ForumSystem.Helpers;
 using ForumSystem.Repositories;
 using ForumSystem.Services;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using ForumSystem.Services.TokenGenerator;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -51,7 +55,7 @@ namespace ForumSystem
 
             builder.Services.AddScoped<AccessTokenGenerator>();
             builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
-
+            builder.Services.AddScoped<ICreateCommentService, CreateCommentService>();
             builder.Services.AddScoped<IEditPostService, EditPostService>();
             builder.Services.AddScoped<IAccountService, AccountService>();
             var app = builder.Build();
