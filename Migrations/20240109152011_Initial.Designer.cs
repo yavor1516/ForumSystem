@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ForumSystem.Migrations
 {
     [DbContext(typeof(ForumContext))]
-    [Migration("20240108114258_postModel")]
-    partial class postModel
+    [Migration("20240109152011_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

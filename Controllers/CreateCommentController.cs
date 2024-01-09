@@ -2,12 +2,16 @@
 using ForumSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using ForumSystem.Exceptions;
+using ForumSystem.Responses;
+using System.Security.Claims;
+using ForumSystem.Models.DTO;
 
 namespace ForumSystem.Controllers
 {
     [ApiController]
-    [Route("/createcomment")]
-    public class CreateCommentController : Controller
+    [Authorize]
+    public class CreateCommentController : ControllerBase
     {
         private readonly ICreateCommentService _commentService;
 
@@ -15,20 +19,34 @@ namespace ForumSystem.Controllers
         {
             _commentService = commentService;
         }
-        public IActionResult CreateComment()
+
+        [Authorize]
+        [HttpPost("CreateComment")]
+        public IActionResult CreateComment([FromBody] CreateCommentDto commentDto)
         {
-            return View(new Comment());
-        }
-        [HttpPost]
-        public ActionResult CreateComment(Comment comment)
-        {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _commentService.CreateComment(comment);
-                return RedirectToAction("Index", "Home");
+                IEnumerable<string> errorMessages = ModelState.Values.SelectMany(u => u.Errors.Select(e => e.ErrorMessage));
+                return BadRequest(new ErrorResponse(errorMessages));
             }
 
-            return View(comment);
+            try
+            {
+                var comment = new Comment
+                {
+                    PostID = commentDto.PostID,
+                    UserID = commentDto.UserID,
+                    Content = commentDto.Content,
+                };
+
+                _commentService.CreateComment(commentDto);
+                return Ok();
+
+            }
+            catch (DuplicateEntityException e)
+            {
+                return Conflict(new ErrorResponse(e.Message));
+            }
         }
     }
 }

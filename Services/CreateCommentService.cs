@@ -1,4 +1,5 @@
 ﻿using ForumSystem.Models;
+using ForumSystem.Models.DTO;
 using ForumSystem.Repositories;
 
 namespace ForumSystem.Services
@@ -10,9 +11,17 @@ namespace ForumSystem.Services
         {
             _commentRepository = commentRepository;
         }
-        public void CreateComment(Comment comment)
+        public void CreateComment(CreateCommentDto commentDto)
         {
-           _commentRepository.CreateComment(comment);
+            var comment = new Comment
+            {
+                PostID = commentDto.PostID,
+                UserID = commentDto.UserID,
+                Content = commentDto.Content,
+                CommentDate = commentDto.CommentDate ?? DateTime.UtcNow
+            };
+
+            _commentRepository.CreateComment(comment);
         }
     }
 }
