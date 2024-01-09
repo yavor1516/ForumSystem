@@ -52,8 +52,9 @@ namespace ForumSystem.Controllers
             try
             {
                 var user = User.FindFirst(ClaimTypes.Name)?.Value;
-                
-                if (user != null && _editPostService.GetPostById(id).User.Username == user.ToString())
+                var userRole = User.FindFirst(ClaimTypes.Role)!.Value;
+
+                if (user != null && _editPostService.GetPostById(id).User.Username == user.ToString()|| userRole == "True")
                 {
                     var post = _editPostService.EditPost(editPostDto,id);
 

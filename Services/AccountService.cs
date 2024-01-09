@@ -68,6 +68,7 @@ namespace ForumSystem.Services
                 PasswordHash = Encoding.UTF8.GetBytes(passwordHash),
                 FirstName = userDTO.FirstName,
                 LastName = userDTO.LastName,
+                RegistrationDate = DateTime.Now
             };
 
             _userDataService.CreateUser(registerUser);
