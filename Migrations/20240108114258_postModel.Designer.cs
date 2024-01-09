@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ForumSystem.Migrations
 {
     [DbContext(typeof(ForumContext))]
-    [Migration("20240105145529_Initial")]
-    partial class Initial
+    [Migration("20240108114258_postModel")]
+    partial class postModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -64,13 +64,13 @@ namespace ForumSystem.Migrations
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("DownVote")
+                    b.Property<int?>("DownVote")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsActive")
+                    b.Property<bool?>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsPublic")
+                    b.Property<bool?>("IsPublic")
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("PostDate")
@@ -79,7 +79,7 @@ namespace ForumSystem.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UpVote")
+                    b.Property<int?>("UpVote")
                         .HasColumnType("int");
 
                     b.Property<int?>("UserID")

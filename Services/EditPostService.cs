@@ -1,4 +1,5 @@
 ﻿using ForumSystem.Models;
+using ForumSystem.Models.DTO;
 using ForumSystem.Repositories;
 
 namespace ForumSystem.Services
@@ -10,20 +11,24 @@ namespace ForumSystem.Services
         { 
             _postRepository = editPostService;
         }
-        public Post EditPost(Post post) 
+        public Post EditPost(EditPostDTO editPostDTO , int Postid) 
         {
-            var existingPost = _postRepository.GetPostByPostId((int)post.PostID);
+            var existingPost = _postRepository.GetPostByPostId(Postid);
             if (existingPost.PostID == null)
             {
                 throw new Exception("Post not found");
             }
 
-            existingPost.Title = post.Title;
-            existingPost.Content = post.Content;
+            existingPost.Title = editPostDTO.Title;
+            existingPost.Content = editPostDTO.Content;
+            existingPost.IsPublic = editPostDTO.isPublic;
 
-            _postRepository.Update((int)existingPost.PostID,post);
+            
+            
 
-            return existingPost;
+
+
+            return _postRepository.Update((int)existingPost.PostID, existingPost); ;
         }
         public void DeletePost(int id)
         {

@@ -55,7 +55,7 @@ namespace ForumSystem.Repositories
         {
             User user = _dbcontext.Users.FirstOrDefault(x => x.Username == username);
             return user;
-                        //?? throw new EntityNotFountException($"User with Username={username} doesn't exist");
+                //?? throw new EntityNotFountException($"User with Username={username} doesn't exist");
         }
 
         public User UpdateUserAdmin(int id, User user) //???????

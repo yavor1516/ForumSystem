@@ -6,6 +6,7 @@ using ForumSystem.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using ForumSystem.Responses;
 
 namespace ForumSystem.Controllers
 {
@@ -15,56 +16,57 @@ namespace ForumSystem.Controllers
     public class EditPostController:ControllerBase
     {
         private readonly IEditPostService _editPostService;
-        private readonly IModelMapper _modelMapper;
-        public EditPostController(IEditPostService editPostService, IModelMapper modelMapper)
+     
+        public EditPostController(IEditPostService editPostService)
         {
             _editPostService = editPostService;
-            _modelMapper = modelMapper;
+          
         }
-        [AllowAnonymous]
-        [HttpGet("{id}")]
-        public IActionResult DeletePostById(int id)
-        { 
-            try
-            {
-                var user = User.FindFirst(ClaimTypes.Name)?.Value;
-              if (user != null && _editPostService.GetPostById(id).User.Username == user.ToString())
-                {
-                    _editPostService.DeletePost(id);
-                    return Ok(new { message = "Post deleted successfully." });
-                }
-                return Unauthorized();
-            }
-            catch (Exception ex)
-            {
-                return NotFound(new { message = "Post not found or error occurred.", error = ex.Message });
-            }
-        }
+     
+        //[HttpGet("{id}")]
+        //public IActionResult DeletePostById(int id)
+        //{ 
+        //    try
+        //    {
+        //        var user = User.FindFirst(ClaimTypes.Name)?.Value;
+        //      if (user != null && _editPostService.GetPostById(id).User.Username == user.ToString())
+        //        {
+        //            _editPostService.DeletePost(id);
+        //            return Ok(new { message = "Post deleted successfully." });
+        //        }
+        //        return Unauthorized();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return NotFound(new { message = "Post not found or error occurred.", error = ex.Message });
+        //    }
+        //}
         [HttpPut("{id}")]
-        public IActionResult EditPost(int id, [FromBody] PostDto editPostDto)
+        public IActionResult EditPost(int id, [FromBody] EditPostDTO editPostDto)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                IEnumerable<string> errorMessages = ModelState.Values.SelectMany(u => u.Errors.Select(e => e.ErrorMessage));
+                return BadRequest(new ErrorResponse(errorMessages));
             }
             try
             {
-                if (!ModelState.IsValid)
+                var user = User.FindFirst(ClaimTypes.Name)?.Value;
+                
+                if (user != null && _editPostService.GetPostById(id).User.Username == user.ToString())
                 {
-                    return BadRequest(ModelState);
+                    var post = _editPostService.EditPost(editPostDto,id);
+
+                    return Ok();
+
                 }
-
-                var postToUpdate = _modelMapper.MapPost(editPostDto);
-                postToUpdate.PostID = id;
-
-                var updatedPost = _editPostService.EditPost(postToUpdate);
-
-                return Ok(updatedPost);
+                return Unauthorized();
+                
+              
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                // Log the exception details here as needed
-                return NotFound(new { message = "Post not found or error occurred.", error = ex.Message });
+                return Conflict(new Exception("post doenst exist or You dont have rights to change it!!"));
             }
         }
     }

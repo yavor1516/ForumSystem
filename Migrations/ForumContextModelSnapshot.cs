@@ -62,13 +62,13 @@ namespace ForumSystem.Migrations
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("DownVote")
+                    b.Property<int?>("DownVote")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsActive")
+                    b.Property<bool?>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsPublic")
+                    b.Property<bool?>("IsPublic")
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("PostDate")
@@ -77,7 +77,7 @@ namespace ForumSystem.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UpVote")
+                    b.Property<int?>("UpVote")
                         .HasColumnType("int");
 
                     b.Property<int?>("UserID")

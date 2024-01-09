@@ -19,13 +19,13 @@ namespace ForumSystem.Models
         public DateTime PostDate { get; set; }
 
         
-        public int UpVote { get; set; }
-        public int DownVote { get; set; }
-        public bool IsActive {  get; set; }//for migration
-        public bool IsPublic {  get; set; }//for migration
+        public int? UpVote { get; set; }
+        public int? DownVote { get; set; }
+        public bool? IsActive {  get; set; }//for migration
+        public bool? IsPublic {  get; set; }//for migration
 
         // Navigation properties
         // public virtual User User { get; set; }
-        public ICollection<Comment> Comments { get; set; }
+        public ICollection<Comment>? Comments { get; set; }
     }
 }

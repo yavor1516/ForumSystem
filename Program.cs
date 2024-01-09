@@ -58,6 +58,8 @@ namespace ForumSystem
             builder.Services.AddScoped<ICreateCommentService, CreateCommentService>();
             builder.Services.AddScoped<IEditPostService, EditPostService>();
             builder.Services.AddScoped<IAccountService, AccountService>();
+            builder.Services.AddScoped<IUserDataService, UserDataService>();
+            builder.Services.AddScoped<IPostService, PostService>();
             var app = builder.Build();
 
             //Here we fill DB with information for testing

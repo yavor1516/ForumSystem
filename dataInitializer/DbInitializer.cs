@@ -192,8 +192,8 @@ namespace ForumSystem.Data
         },
     };
 
-                context.Posts.AddRange(posts);
-                context.SaveChanges();
+          //      context.Posts.AddRange(posts);
+            //    context.SaveChanges();
             }
             // Add 10 Comments
             if (!context.Comments.Any())

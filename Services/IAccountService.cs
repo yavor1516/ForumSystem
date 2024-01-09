@@ -1,13 +1,17 @@
 ﻿using ForumSystem.Models;
+using ForumSystem.Models.DTO;
 
 namespace ForumSystem.Services
 {
     public interface IAccountService
     {
-       public User GetByEmail (string email);
-       public User GetByUsername (string username);
 
-       public User CreateUser (User user);
+       
+
+        public User RegisterUser (UserDto userDTO);
+        public User LoginUser(UserLoginDto userLoginDto);
+
+        public string GenerateToken(User user);
 
     }
 }

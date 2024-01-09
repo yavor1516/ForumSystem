@@ -4,13 +4,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ForumSystem.Repositories
 {
+
     public class PostRepository : IPostRepository
     {
         private readonly ForumContext _dbcontext;
-
         public PostRepository(ForumContext dbcontext)
         {
             _dbcontext = dbcontext;
+
         }
         //
         //IQueryable<Post>
@@ -38,7 +39,7 @@ namespace ForumSystem.Repositories
 
         public Post GetPostByPostId(int id)
         {
-            var db = _dbcontext.Posts.Include(p => p.Comments).ThenInclude(u => u.User).ToList();
+            var db = _dbcontext.Posts.Include(p => p.Comments).Include(u => u.User).ToList();
             var post = db.FirstOrDefault(x => x.PostID == id);
            
            
@@ -52,17 +53,12 @@ namespace ForumSystem.Repositories
 
         public Post Update(int id, Post updatedPost)
         {
-            var postToUpdate = GetPostByPostId(id);
-            if (postToUpdate != null)
-            {
-                postToUpdate.Title = updatedPost.Title;
-                postToUpdate.Content = updatedPost.Content;
-
+          
                 _dbcontext.SaveChanges();
-                return postToUpdate;
-            }
+                return updatedPost;
+        
 
-            throw new EntityNotFountException($"Post with ID {id} doesn't exist.");
+         
         }
     }
 
