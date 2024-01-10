@@ -4,6 +4,7 @@ using ForumSystem;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ForumSystem.Migrations
 {
     [DbContext(typeof(ForumContext))]
-    partial class ForumContextModelSnapshot : ModelSnapshot
+    [Migration("20240110130827_addingIsDeletedToComments")]
+    partial class addingIsDeletedToComments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,7 +41,7 @@ namespace ForumSystem.Migrations
                     b.Property<int?>("PostID")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserID")
+                    b.Property<int?>("UserID")
                         .HasColumnType("int");
 
                     b.Property<bool?>("isDeleted")
@@ -71,9 +73,6 @@ namespace ForumSystem.Migrations
                     b.Property<bool?>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("IsDeleted")
-                        .HasColumnType("bit");
-
                     b.Property<bool?>("IsPublic")
                         .HasColumnType("bit");
 
@@ -96,35 +95,13 @@ namespace ForumSystem.Migrations
                     b.ToTable("Posts");
                 });
 
-            modelBuilder.Entity("ForumSystem.Models.Tag", b =>
-                {
-                    b.Property<int>("TagID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TagID"), 1L, 1);
-
-                    b.Property<int?>("PostID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TagName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("TagID");
-
-                    b.HasIndex("PostID");
-
-                    b.ToTable("Tags");
-                });
-
             modelBuilder.Entity("ForumSystem.Models.User", b =>
                 {
-                    b.Property<int>("UserID")
+                    b.Property<int?>("UserID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserID"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("UserID"), 1L, 1);
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(450)");
@@ -172,15 +149,17 @@ namespace ForumSystem.Migrations
 
             modelBuilder.Entity("ForumSystem.Models.Comment", b =>
                 {
-                    b.HasOne("ForumSystem.Models.Post", null)
+                    b.HasOne("ForumSystem.Models.Post", "Post")
                         .WithMany("Comments")
                         .HasForeignKey("PostID");
 
-                    b.HasOne("ForumSystem.Models.User", null)
+                    b.HasOne("ForumSystem.Models.User", "User")
                         .WithMany("Comments")
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserID");
+
+                    b.Navigation("Post");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ForumSystem.Models.Post", b =>
@@ -192,18 +171,9 @@ namespace ForumSystem.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ForumSystem.Models.Tag", b =>
-                {
-                    b.HasOne("ForumSystem.Models.Post", null)
-                        .WithMany("Tags")
-                        .HasForeignKey("PostID");
-                });
-
             modelBuilder.Entity("ForumSystem.Models.Post", b =>
                 {
                     b.Navigation("Comments");
-
-                    b.Navigation("Tags");
                 });
 
             modelBuilder.Entity("ForumSystem.Models.User", b =>

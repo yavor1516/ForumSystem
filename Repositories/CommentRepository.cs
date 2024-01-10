@@ -26,14 +26,14 @@ namespace ForumSystem.Repositories
             return comment;
         }
 
-        public bool DeleteComment(int id)
+        public Comment DeleteComment(int id)
         {
             var comment = _dbcontext.Comments.Find(id);// to do
-            if (comment == null) return false;
-
-            _dbcontext.Comments.Remove(comment);
-            //_dbcontext.SaveChanges();
-            return true;
+            comment.isDeleted = true;
+            _dbcontext.Comments.Update(comment);
+            
+            _dbcontext.SaveChanges();
+            return comment ?? throw new EntityNotFountException($"Comment with id{id} doesn't exist.");
         }
 
         public ICollection<Comment> GetAllComments()

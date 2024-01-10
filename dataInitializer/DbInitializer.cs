@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using System.Xml.Linq;
 
 namespace ForumSystem.Data
 {
@@ -11,13 +12,13 @@ namespace ForumSystem.Data
         {
             context.Database.EnsureCreated(); // Ensure the database is created
 
-            if (context.Users.Any() || context.Posts.Any() || context.Comments.Any())
+            if (context.Users.Any() || context.Posts.Any() || context.Comments.Any() || context.Tags.Any())
             {
                 return; // Database has been seeded
             }
 
             var users = new[]
- { 
+ {
     new User
     {
         Username = "john_doe",
@@ -167,6 +168,7 @@ namespace ForumSystem.Data
             DownVote = 5,
              IsPublic = true,
             IsActive = true,
+            IsDeleted = true
         },
         new Post
         {
@@ -178,6 +180,7 @@ namespace ForumSystem.Data
             DownVote = 3,
              IsPublic = true,
             IsActive = true,
+            IsDeleted = true
         },
         new Post
         {
@@ -189,23 +192,49 @@ namespace ForumSystem.Data
             DownVote = 7,
             IsPublic = true,
             IsActive = true,
+            IsDeleted = false,
         },
     };
-
-          //      context.Posts.AddRange(posts);
-            //    context.SaveChanges();
-            }
-            // Add 10 Comments
-            if (!context.Comments.Any())
-            {
-                var comments = new[]
+                if (!context.Tags.Any())
                 {
+                    var tags = new[]
+                    {
+        new Tag
+        {
+           
+           TagName = "skateboards"
+
+        },
+        new Tag
+        {
+         
+          TagName = "motorcycles"
+        },
+        new Tag
+        {
+         
+            TagName = "cars"
+        },
+                    };
+
+                    context.Tags.AddRange(tags);
+                    context.SaveChanges();
+
+                    //      context.Posts.AddRange(posts);
+                    //    context.SaveChanges();
+                }
+                // Add 10 Comments
+                if (!context.Comments.Any())
+                {
+                    var comments = new[]
+                    {
         new Comment
         {
             PostID = 1,
             UserID = 1,
             Content = "This is a comment on the first post.",
             CommentDate = DateTime.Now.AddDays(-10),
+            isDeleted = false,
         },
         new Comment
         {
@@ -213,6 +242,7 @@ namespace ForumSystem.Data
             UserID = 2,
             Content = "This is a comment on the second post.",
             CommentDate = DateTime.Now.AddDays(-9),
+            isDeleted = true
         },
         new Comment
         {
@@ -220,13 +250,15 @@ namespace ForumSystem.Data
             UserID = 3,
             Content = "This is a comment on the third post.",
             CommentDate = DateTime.Now.AddDays(-8),
+            isDeleted = true
         },
     
         // Add the remaining comments...
     };
 
-                context.Comments.AddRange(comments);
-                context.SaveChanges();
+                    context.Comments.AddRange(comments);
+                    context.SaveChanges();
+                }
             }
         }
     }

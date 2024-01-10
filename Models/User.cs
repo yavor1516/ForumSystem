@@ -8,7 +8,7 @@ namespace ForumSystem.Models
     {
         [Key]
        
-        public int ? UserID { get; set; }
+        public int UserID { get; set; }
         
         public string ? Username { get; set; }
        
