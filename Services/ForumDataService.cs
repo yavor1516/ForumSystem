@@ -1,6 +1,7 @@
 ﻿using ForumSystem.Exceptions;
 using ForumSystem.Models;
 using ForumSystem.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
 namespace ForumSystem.Services
@@ -9,11 +10,13 @@ namespace ForumSystem.Services
     {
         private readonly IPostRepository _postRepository;
         private readonly IUserRepository _userRepository;
+        private readonly ICommentRepository _commentRepository;
 
-        public ForumDataService(IPostRepository postRepository, IUserRepository userRepository)
+        public ForumDataService(IPostRepository postRepository, IUserRepository userRepository, ICommentRepository commentRepository)
         {
             _postRepository = postRepository;
             _userRepository = userRepository;
+            _commentRepository = commentRepository;
         }
 
         public void DeletePost(int id)
@@ -26,9 +29,39 @@ namespace ForumSystem.Services
             return _userRepository.GetUserById(id);
         }
 
+        public int GetTotalPostsCount()
+        {
+            return _postRepository.GetAllPosts().Count();
+        }
+
+        public int GetTotalUsersCount()
+        {
+            return _userRepository.GetAllUsers().Count();
+        }
+
+        public int GetTotalCommentsCount()
+        {
+            return _commentRepository.GetAllComments().Count();
+        }
+        public int GetTotalLikesCount()
+        {
+            return _postRepository.GetAllPosts().Sum(post => post.UpVote.GetValueOrDefault());
+        }
+
         public ICollection<Post> ShowAllPosts()
         {
             return _postRepository.GetAllPosts(); 
         }
+
+        public IEnumerable<Post> GetRecentPosts(int numberOfRecentPosts)
+        {
+            return _postRepository.GetAllPosts()
+                .OrderByDescending(post => post.PostDate)
+                .Take(numberOfRecentPosts)
+                .ToList();
+        }
+
+        
+
     }
 }

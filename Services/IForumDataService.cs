@@ -6,7 +6,12 @@ namespace ForumSystem.Services
     {
      public void DeletePost(int id);        
      public ICollection<Post> ShowAllPosts();
-        public User GetUserById(int id);
-     
+     public IEnumerable<Post> GetRecentPosts(int numberOfRecentPosts);
+     public User GetUserById(int id);
+     public int GetTotalUsersCount();
+     public int GetTotalPostsCount();
+     public int GetTotalCommentsCount();
+     public int GetTotalLikesCount();
+
     }
 }
