@@ -3,6 +3,7 @@ using ForumSystem.Models;
 using ForumSystem.Repositories;
 using ForumSystem.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace ForumSystem.Controllers
 {
@@ -13,11 +14,14 @@ namespace ForumSystem.Controllers
         {
             _postRepository=postRepository;
         }
+        [HttpGet]
         public IActionResult Index()
         {
             List<Post> posts = (List<Post>)_postRepository.GetAllPosts();
             return View(posts);
         }
+
+        [HttpGet]
         public IActionResult Details(int id)
         {
             try
@@ -32,5 +36,18 @@ namespace ForumSystem.Controllers
                 return View("Error");
             }
         }
+
+        [HttpGet]
+        public IActionResult Create() 
+        {
+            var post = new PostViewModel();
+            return View(post);
+        }
+
+      /*  [HttpPost]
+        public IActionResult Create(PostViewModel postViewModel) 
+        { 
+
+        }*/   //TODO
     }
 }

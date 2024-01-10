@@ -1,4 +1,5 @@
-﻿@using ForumSystem.Models
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using ForumSystem.Models
 @model List<Post>
 
 <html>
@@ -7,38 +8,38 @@
     <link href="~/css/style.css" rel="stylesheet"/>
 </head>
 <body>
-    <header>
         <div>
             <h3>
-                <a href="/Home/Index">Home</a>
-                |<a href="/Forum/Index">Forum</a>
+                <a asp-controller="Home" asp-action="Index">Home</a>
+                |<a asp-controller="Forum" asp-action="Index">Forum</a>
             </h3>
         </div>
-    </header>
+        <p>
+            <a asp-controller="Forum" asp-action="Create"> Create New Post</a>
+        </p>
 
-    <table>
-        <tr>
-            <th>PostID</th>
-            <th>Title</th>
-            <th>Post-Date</th>
-            <th>Active</th>
-            <th>Open</th>
-        </tr>
-        @{
-            foreach(var post in Model)
-            {
-                <tr>
-                    <td>@post.PostID</td>
-                    <td>@post.Title</td>
-                    <td>@post.PostDate</td>
-                    <td>@post.IsActive</td>
-                    <td><a href="@($"/Forum/Details/{post.PostID}")">Open</a></td>
-                </tr>
+     <table>
+            <tr>
+                <th>PostID</th>
+                <th>Title</th>
+                <th>Post-Date</th>
+                <th>Active</th>
+                <th>Open</th>
+            </tr>
+            @{
+                foreach(var post in Model)
+                {
+                    <tr>
+                        <td>@post.PostID</td>
+                        <td>@post.Title</td>
+                        <td>@post.PostDate</td>
+                        <td>@post.IsActive</td>
+                        <td><a href="@($"/Forum/Details/{post.PostID}")">Open</a></td>
+                    </tr>
+                }
             }
-        }
-    </table>
-   
+     </table>
+
 
 </body>
-
 </html>
