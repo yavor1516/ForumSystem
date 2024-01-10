@@ -7,7 +7,7 @@ using ForumSystem.Responses;
 using System.Security.Claims;
 using ForumSystem.Models.DTO;
 
-namespace ForumSystem.Controllers
+namespace ForumSystem.Controllers.Api
 {
     [ApiController]
     [Authorize]

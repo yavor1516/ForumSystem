@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections;
 using System.Text;
 
-namespace ForumSystem.Controllers
+namespace ForumSystem.Controllers.Api
 {
     public class AuthenticationController : ControllerBase
     {
@@ -52,18 +52,18 @@ namespace ForumSystem.Controllers
             }
             try
             {
-              var user =  _accountService.LoginUser(loginRequest);
+                var user = _accountService.LoginUser(loginRequest);
 
                 return Ok(new AuthenticatedUserResponse()
                 {
                     accessToken = _accountService.GenerateToken(user)
-                });;
+                }); ;
             }
             catch (Exception e)
             {
                 return Conflict(new ErrorResponse(e.Message));
             }
-         
+
         }
     }
 }

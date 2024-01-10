@@ -6,7 +6,7 @@ using ForumSystem.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 
-namespace ForumSystem.Controllers
+namespace ForumSystem.Controllers.Api
 {
     [ApiController]
     [Route("/feed")]
@@ -14,7 +14,7 @@ namespace ForumSystem.Controllers
     {
         private readonly IForumDataService _forumDataService;
         private readonly IModelMapper _modelMapper;
-        public FeedController(IForumDataService forumDataService , IModelMapper modelMapper)
+        public FeedController(IForumDataService forumDataService, IModelMapper modelMapper)
         {
             _forumDataService = forumDataService;
             _modelMapper = modelMapper;
@@ -22,12 +22,12 @@ namespace ForumSystem.Controllers
         [HttpGet("{id}")]
         public IActionResult DeleteUserById(int id)
         {
-             
+
             try
             {
                 User user = _forumDataService.GetUserById(id);
                 UserResponseDto userResponseDto = _modelMapper.MapUser(user);
-                userResponseDto.posts = _forumDataService.ShowAllPosts().Where(x=>x.UserID == userResponseDto.UserID).ToList();
+                userResponseDto.posts = _forumDataService.ShowAllPosts().Where(x => x.UserID == userResponseDto.UserID).ToList();
                 return Ok(userResponseDto.posts);
                 //_forumDataService.DeletePost(id);                
                 //return Ok("We did it"); 
@@ -41,7 +41,7 @@ namespace ForumSystem.Controllers
         [HttpGet("")]
         public IActionResult ShowFeed()
         {
-            var posts =_forumDataService.ShowAllPosts();
+            var posts = _forumDataService.ShowAllPosts();
             string text = "koment";
             foreach (var item in posts)
             {
@@ -50,18 +50,18 @@ namespace ForumSystem.Controllers
                 foreach (var comment in item.Comments)
                 {
                     text += comment.Content;
-                }                
-            }            
+                }
+            }
             try
             {
                 return Ok(text);
             }
             catch (EntityNotFountException ex)
             {
-                
-              return NotFound(ex.Message);
+
+                return NotFound(ex.Message);
             }
-            
+
         }
     }
 }

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace ForumSystem.Controllers
+namespace ForumSystem.Controllers.Api
 {
     [ApiController]
     [Authorize]
@@ -33,15 +33,15 @@ namespace ForumSystem.Controllers
             try
             {
                 var user = User.FindFirst(ClaimTypes.Name)?.Value;
-               
-                    _postService.CreatePost(postDTO, user);
 
-                    return Ok();
+                _postService.CreatePost(postDTO, user);
 
-               
-            
+                return Ok();
 
-             
+
+
+
+
             }
             catch (DuplicateEntityException e)
             {

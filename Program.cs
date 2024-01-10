@@ -20,7 +20,7 @@ namespace ForumSystem
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            builder.Services.AddControllers(); 
+            builder.Services.AddControllersWithViews(); 
            
       //      builder.Configuration.GetConnectionString("DefaultConnection");
             builder.Services.AddDbContext<ForumContext>(options =>
@@ -70,7 +70,8 @@ namespace ForumSystem
                 DbInitializer.Initialize(dbContext);
             }
             //  app.MapGet("/", () => "Hello World!");
-            app.MapControllers();
+            app.UseStaticFiles();
+            app.MapDefaultControllerRoute();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

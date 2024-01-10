@@ -8,21 +8,21 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using ForumSystem.Responses;
 
-namespace ForumSystem.Controllers
+namespace ForumSystem.Controllers.Api
 {
     [ApiController]
     [Authorize]
     [Route("/feed/edit")]
-    public class EditPostController:ControllerBase
+    public class EditPostController : ControllerBase
     {
         private readonly IEditPostService _editPostService;
-     
+
         public EditPostController(IEditPostService editPostService)
         {
             _editPostService = editPostService;
-          
+
         }
-     
+
         //[HttpGet("{id}")]
         //public IActionResult DeletePostById(int id)
         //{ 
@@ -54,16 +54,16 @@ namespace ForumSystem.Controllers
                 var user = User.FindFirst(ClaimTypes.Name)?.Value;
                 var userRole = User.FindFirst(ClaimTypes.Role)!.Value;
 
-                if (user != null && _editPostService.GetPostById(id).User.Username == user.ToString()|| userRole == "True")
+                if (user != null && _editPostService.GetPostById(id).User.Username == user.ToString() || userRole == "True")
                 {
-                    var post = _editPostService.EditPost(editPostDto,id);
+                    var post = _editPostService.EditPost(editPostDto, id);
 
                     return Ok();
 
                 }
                 return Unauthorized();
-                
-              
+
+
             }
             catch (Exception e)
             {

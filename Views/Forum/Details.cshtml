@@ -1,0 +1,24 @@
+﻿@using ForumSystem.Models
+@model Post
+
+<html>
+<head>
+    <title>ForumSystem-Details</title>
+    <link href="~/css/style.css" rel="stylesheet" />
+</head>
+<body>
+    <header>
+        <div>
+            <h3>
+                <a href="/Home/Index">Home</a>
+                |<a href="/Forum/Index">Forum</a>
+            </h3>
+        </div>
+    </header>
+    <h2>@Model.PostID</h2>
+
+    <p>@Model.Content</p>
+    <p>@Model.PostDate</p>
+  
+</body>
+</html>

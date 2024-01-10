@@ -1,0 +1,44 @@
+﻿@using ForumSystem.Models
+@model List<Post>
+
+<html>
+<head>
+    <title>ForumSystem-Forum</title>
+    <link href="~/css/style.css" rel="stylesheet"/>
+</head>
+<body>
+    <header>
+        <div>
+            <h3>
+                <a href="/Home/Index">Home</a>
+                |<a href="/Forum/Index">Forum</a>
+            </h3>
+        </div>
+    </header>
+
+    <table>
+        <tr>
+            <th>PostID</th>
+            <th>Title</th>
+            <th>Post-Date</th>
+            <th>Active</th>
+            <th>Open</th>
+        </tr>
+        @{
+            foreach(var post in Model)
+            {
+                <tr>
+                    <td>@post.PostID</td>
+                    <td>@post.Title</td>
+                    <td>@post.PostDate</td>
+                    <td>@post.IsActive</td>
+                    <td><a href="@($"/Forum/Details/{post.PostID}")">Open</a></td>
+                </tr>
+            }
+        }
+    </table>
+   
+
+</body>
+
+</html>
