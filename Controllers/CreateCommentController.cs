@@ -32,14 +32,8 @@ namespace ForumSystem.Controllers
 
             try
             {
-                var comment = new Comment
-                {
-                    PostID = commentDto.PostID,
-                    UserID = commentDto.UserID,
-                    Content = commentDto.Content,
-                };
-
-                _commentService.CreateComment(commentDto);
+                var user = User.FindFirst(ClaimTypes.Name)?.Value;
+                _commentService.CreateComment(commentDto, user);
                 return Ok();
 
             }

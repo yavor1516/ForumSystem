@@ -5,6 +5,8 @@ namespace ForumSystem.Services
 {
     public interface ICreateCommentService
     {
-        public void CreateComment(CreateCommentDto commentDto);
+        public void CreateComment(CreateCommentDto commentDto,string username);
+
+        public ICollection<Comment> GetCommentsByPostId(int postId);
     }
 }

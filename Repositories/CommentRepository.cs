@@ -20,6 +20,8 @@ namespace ForumSystem.Repositories
         public Comment CreateComment(Comment comment)
         {
             _dbcontext.Comments.Add(comment);
+            var postToCreateComment = _dbcontext.Posts.FirstOrDefault(x => x.PostID == comment.PostID);
+            postToCreateComment.Comments.Add(comment);
             _dbcontext.SaveChanges();
             return comment;
         }
@@ -38,6 +40,13 @@ namespace ForumSystem.Repositories
         {
             return _dbcontext.Comments.ToList();
         }
+
+        //public ICollection<Comment> GetAllCommentsInPostWithId(int id)
+        //{
+        //    return 
+        //        //_dbcontext.Posts.FirstOrDefault(x => x.PostID == id).Comments;
+        //        // return _dbcontext.Posts.Include(p => p.Comments).Include(u=>u.User).ToList();
+        //}
 
         public Comment GetCommentById(int id)
         {

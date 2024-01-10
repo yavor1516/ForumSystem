@@ -7,21 +7,30 @@ namespace ForumSystem.Services
     public class CreateCommentService:ICreateCommentService
     {
         private readonly ICommentRepository _commentRepository;
-        public CreateCommentService(ICommentRepository commentRepository)
+        private readonly IUserRepository _userRepository;
+        private readonly IPostRepository _postRepository;
+        public CreateCommentService(ICommentRepository commentRepository, IUserRepository userRepository, IPostRepository postRepository)
         {
             _commentRepository = commentRepository;
+            _userRepository = userRepository;
+            _postRepository = postRepository;
         }
-        public void CreateComment(CreateCommentDto commentDto)
+        public void CreateComment(CreateCommentDto commentDto , string username)
         {
             var comment = new Comment
             {
                 PostID = commentDto.PostID,
-                UserID = commentDto.UserID,
+                UserID = _userRepository.GetUserByUsername(username).UserID,
                 Content = commentDto.Content,
-                CommentDate = commentDto.CommentDate ?? DateTime.UtcNow
+                CommentDate = DateTime.UtcNow
             };
 
             _commentRepository.CreateComment(comment);
+        }
+
+        public ICollection<Comment> GetCommentsByPostId(int postId)
+        {
+            return _postRepository.GetPostByPostId(postId).Comments;
         }
     }
 }

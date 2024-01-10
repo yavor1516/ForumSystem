@@ -10,6 +10,8 @@ namespace ForumSystem.Repositories
         public Comment UpdateComment(int id,Comment comment);
         public bool DeleteComment(int id);
         public bool CommentExists(int id);//to ask
+
+       // public ICollection<Comment> GetAllCommentsInPostWithId(int id);
         
     }
 }
