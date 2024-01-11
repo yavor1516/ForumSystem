@@ -13,7 +13,7 @@ namespace ForumSystem.Controllers
         }
         public IActionResult Index()
         {
-            List<Post> posts = (List<Post>)_postRepository.GetAllPosts();// Retrieve the list of posts from your data source
+            var posts = _postRepository.GetAllPosts();// Retrieve the list of posts from your data source
             return View(posts);
         }
     }
