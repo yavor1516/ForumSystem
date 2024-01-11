@@ -17,7 +17,7 @@ namespace ForumSystem.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            List<Post> posts = (List<Post>)_postRepository.GetAllPosts();
+           var posts = _postRepository.GetAllPosts();
             return View(posts);
         }
 

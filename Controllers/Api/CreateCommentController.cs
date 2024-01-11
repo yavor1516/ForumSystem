@@ -9,6 +9,10 @@ using ForumSystem.Models.DTO;
 
 namespace ForumSystem.Controllers.Api
 {
+    ///Forum/Details/1 <summary>
+    /// Forum/Details/1
+    /// </summary>
+    [Route("/Forum/Details")]
     [ApiController]
     [Authorize]
     public class CreateCommentController : ControllerBase

@@ -60,6 +60,7 @@ namespace ForumSystem
             builder.Services.AddScoped<IAccountService, AccountService>();
             builder.Services.AddScoped<IUserDataService, UserDataService>();
             builder.Services.AddScoped<IPostService, PostService>();
+            builder.Services.AddScoped<IPostVoteService, PostVoteService>();
             var app = builder.Build();
 
             //Here we fill DB with information for testing
