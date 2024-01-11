@@ -26,16 +26,9 @@ namespace ForumSystem.Controllers.Api
                 var likesCount = _forumDataService.GetTotalLikesCount();
                 var recentPosts = _forumDataService.GetRecentPosts(5); // vuvedi chislo za kolko recent posta da se pokajat
 
-                var stats = new
-                {
-                    TotalRegisteredUsers = registeredUsersCount,
-                    TotalPosts = postsCount,
-                    TotalComments = commentsCount,
-                    TotalLikes = likesCount,
-                    RecentPosts = recentPosts 
-                };
+              
 
-                return Ok(stats);
+                return Ok();
             }
             catch (Exception ex) 
             {

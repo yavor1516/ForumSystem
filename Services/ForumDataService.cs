@@ -53,8 +53,11 @@ namespace ForumSystem.Services
             return _postRepository.GetAllPosts(); 
         }
 
+        //IQueryable
         public IEnumerable<Post> GetRecentPosts(int numberOfRecentPosts)
         {
+
+
             return _postRepository.GetAllPosts()
                 .OrderByDescending(post => post.PostDate)
                 .Take(numberOfRecentPosts)
