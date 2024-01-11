@@ -26,6 +26,7 @@ namespace ForumSystem.Services.TokenGenerator
                  new Claim(ClaimTypes.Email,user.Email),
                  new Claim(ClaimTypes.Name,user.Username),
                  new Claim(ClaimTypes.Role,user.IsAdmin.ToString()),
+                 new Claim(ClaimTypes.UserData,user.isBlocked.ToString())
 
             };
             JwtSecurityToken token = new JwtSecurityToken(_configuration.Issuer,

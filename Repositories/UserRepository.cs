@@ -58,13 +58,11 @@ namespace ForumSystem.Repositories
                 //?? throw new EntityNotFountException($"User with Username={username} doesn't exist");
         }
 
-        public User UpdateUserAdmin(int id, User user) //???????
+        public User UpdateUser(User user) //???????
         {
-            User userToUpdate=GetUserById(id);
-            userToUpdate.IsAdmin = user.IsAdmin;
-          //  _dbcontext.Update(userToUpdate);
+
             _dbcontext.SaveChanges();
-            return userToUpdate;
+            return user;
         }
     }
 }

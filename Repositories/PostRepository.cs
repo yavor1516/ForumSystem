@@ -15,9 +15,9 @@ namespace ForumSystem.Repositories
         }
         //
         //IQueryable<Post>
-        public ICollection<Post> GetAllPosts()
+        public IQueryable<Post> GetAllPosts()
         {
-            return _dbcontext.Posts.Include(p => p.Comments).Include(u=>u.User).ToList();
+            return _dbcontext.Posts.Where(x=>x.IsDeleted == null || false).Include(p => p.Comments).Include(u=>u.User);
         }
 
         public Post CreatePost(Post post)
@@ -29,6 +29,16 @@ namespace ForumSystem.Repositories
 
         public void DeletePost(int id)
         {
+            var postToDelte = GetPostByPostId(id);
+            if (postToDelte != null && postToDelte.IsDeleted != true)    //to do
+            {
+                postToDelte.IsDeleted = true;
+                _dbcontext.Update(postToDelte);
+                _dbcontext.SaveChanges();
+            }
+
+           
+          
             //var postToUpdate = GetPostByPostId(id);
             //if (postToUpdate != null && postToUpdate.IsActive)    //to do
             //{
@@ -39,7 +49,7 @@ namespace ForumSystem.Repositories
 
         public Post GetPostByPostId(int id)
         {
-            var db = _dbcontext.Posts.Include(p => p.Comments).Include(u => u.User).ToList();
+            var db = _dbcontext.Posts.Where(x=>x.IsDeleted == null || false).Include(p => p.Comments).Include(u => u.User).ToList();
             var post = db.FirstOrDefault(x => x.PostID == id);
            
            

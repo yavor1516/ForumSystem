@@ -30,9 +30,10 @@ namespace ForumSystem.Services
 
             return _postRepository.Update((int)existingPost.PostID, existingPost); ;
         }
-        public void DeletePost(int id)
+        public bool DeletePost(int id)
         {
             _postRepository.DeletePost(id);
+            return true;
         }
 
         public Post GetPostById(int id)

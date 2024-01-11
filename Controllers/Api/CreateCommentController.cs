@@ -37,8 +37,14 @@ namespace ForumSystem.Controllers.Api
             try
             {
                 var user = User.FindFirst(ClaimTypes.Name)?.Value;
-                _commentService.CreateComment(commentDto, user);
-                return Ok();
+                var userisBlocked = User.FindFirst(ClaimTypes.UserData)?.Value;
+                if (userisBlocked != "True")
+                {
+                    _commentService.CreateComment(commentDto, user);
+                    return Ok();
+                }
+                return Unauthorized("Your are blocked by admin!!!");
+             
 
             }
             catch (DuplicateEntityException e)

@@ -7,7 +7,7 @@ namespace ForumSystem.Repositories
     {
         public Post GetPostByPostId(int id);
         public bool PostExists(string title);//to ask
-        public ICollection<Post> GetAllPosts();
+        public IQueryable<Post> GetAllPosts();
         public Post CreatePost(Post post);
         public Post Update(int id, Post post);
         public void DeletePost(int id);

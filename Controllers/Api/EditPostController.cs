@@ -42,6 +42,7 @@ namespace ForumSystem.Controllers.Api
         //    }
         //}
         [HttpPut("{id}")]
+        [Authorize]
         public IActionResult EditPost(int id, [FromBody] EditPostDTO editPostDto)
         {
             if (!ModelState.IsValid)
@@ -57,6 +58,32 @@ namespace ForumSystem.Controllers.Api
                 if (user != null && _editPostService.GetPostById(id).User.Username == user.ToString() || userRole == "True")
                 {
                     var post = _editPostService.EditPost(editPostDto, id);
+
+                    return Ok();
+
+                }
+                return Unauthorized();
+
+
+            }
+            catch (Exception e)
+            {
+                return Conflict(new Exception("post doenst exist or You dont have rights to change it!!"));
+            }
+        }
+
+        [HttpPut("delete/{id}")]
+        public IActionResult DeletePost(int id)
+        {
+           
+            try
+            {
+                var user = User.FindFirst(ClaimTypes.Name)?.Value;
+                var userRole = User.FindFirst(ClaimTypes.Role)!.Value;
+
+                if (user != null && _editPostService.GetPostById(id).User.Username == user.ToString() || userRole == "True")
+                {
+                    var post = _editPostService.DeletePost(id);
 
                     return Ok();
 

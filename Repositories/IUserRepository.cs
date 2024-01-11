@@ -10,7 +10,7 @@ namespace ForumSystem.Repositories
         public User GetUserByEmail(string email);
         public ICollection<User> GetAllUsers();
         public User CreateUser(User user);
-        public User UpdateUserAdmin(int id,User user);// to ask
+        public User UpdateUser(User user);// to ask
         public bool BlockUser(int id);//to ask
     }
 }

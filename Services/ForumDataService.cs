@@ -48,7 +48,7 @@ namespace ForumSystem.Services
             return _postRepository.GetAllPosts().Sum(post => post.UpVote.GetValueOrDefault());
         }
 
-        public ICollection<Post> ShowAllPosts()
+        public IQueryable<Post> ShowAllPosts()
         {
             return _postRepository.GetAllPosts(); 
         }
@@ -64,7 +64,9 @@ namespace ForumSystem.Services
                 .ToList();
         }
 
-        
-
+        public Post GetPostByPostId(int id)
+        {
+            return _postRepository.GetPostByPostId(id);
+        }
     }
 }

@@ -34,11 +34,16 @@ namespace ForumSystem.Controllers.Api
             {
                 var user = User.FindFirst(ClaimTypes.Name)?.Value;
 
-                _postService.CreatePost(postDTO, user);
+                var userisBlocked = User.FindFirst(ClaimTypes.UserData)?.Value;
+                if(userisBlocked != "True")
+                {
+                    _postService.CreatePost(postDTO, user);
 
-                return Ok();
+                    return Ok();
 
+                }
 
+                return Unauthorized("Your are blocked by admin!!!");
 
 
 

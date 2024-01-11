@@ -9,15 +9,15 @@ namespace ForumSystem.Controllers
 {
     public class ForumController : Controller
     {
-        private readonly IPostRepository _postRepository;
-        public ForumController(IPostRepository postRepository)
+        private readonly IForumDataService _forumDataService;
+        public ForumController(IForumDataService forumDataService)
         {
-            _postRepository=postRepository;
+            _forumDataService = forumDataService;
         }
         [HttpGet]
         public IActionResult Index()
         {
-           var posts = _postRepository.GetAllPosts();
+           var posts = _forumDataService.ShowAllPosts();
             return View(posts);
         }
 
@@ -26,7 +26,7 @@ namespace ForumSystem.Controllers
         {
             try
             {
-                Post post = _postRepository.GetPostByPostId(id);
+                Post post = _forumDataService.GetPostByPostId(id);
                 return View(post);
             }
             catch (EntityNotFountException ex)
