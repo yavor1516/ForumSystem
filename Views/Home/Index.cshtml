@@ -7,11 +7,6 @@
     <div class="row">
         <!-- Main content area -->
         <div class="col-md-8">
-            <!-- Hero Section -->
-            <div class="mb-4 p-5 bg-primary text-white rounded">
-                <h1 class="display-4">Welcome to the Forum</h1>
-                <p class="lead">The current time is @DateTime.Now.ToString("HH:mm") on @DateTime.Now.ToString("dddd, dd MMMM yyyy").</p>
-            </div>
 
             <!-- Create New Post Section -->
             <div class="card mb-4">
@@ -29,24 +24,40 @@
                             <label for="postContent">Content</label>
                             <textarea class="form-control" id="postContent" rows="3"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+
+                        <!-- Toggle switch for post visibility -->
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="postVisibility">
+                            <label class="custom-control-label mt-2 mb-2" for="postVisibility">Public</label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary rounded-pill">Submit</button>
+
                     </form>
                 </div>
             </div>
-
-            <!-- Top Posts of the Day -->
-            <div>
-                <h2 class="mb-3">Top 3 Posts of the Day</h2>
-                <!-- Example post (repeat for each top post) -->
-                <div class="card mb-2">
-                    <div class="card-body">
-                        <h5 class="card-title">Post Title 1</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="btn btn-primary">Read more</a>
-                    </div>
+            <!-- List of Posts Section -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    List of Posts
                 </div>
-                <!-- Repeat for other top posts -->
+                <ul class="list-group list-group-flush">
+                    @foreach (var post in Model)
+                    {
+                        <li class="list-group-item">
+                            <h5>@post.Title</h5>
+                            <p>@post.Content</p>
+                            <!-- Post meta data here -->
+                            <div>
+                                <span>UpVotes: @post.UpVote</span> |
+                                <span>DownVotes: @post.DownVote</span> |
+                                <span>IsActive: @post.IsActive</span>
+                            </div>
+                        </li>
+                    }
+                </ul>
             </div>
+            
         </div>
 
         <!-- Sidebar -->
