@@ -76,17 +76,23 @@
     margin-left: 250px;">
         <div class="row">
             <!-- Top 3 Posts of the Day Section -->
-            <div class="col-md-4">
+            <div class="col-md-4 sticky-top">
                 <div class="top-posts">
                     <h2 class="mb-3">Top 3 Posts of the Day</h2>
                     <!-- Example post (repeat for each top post) -->
                     <div class="card mb-2">
                         <div class="card-body">
-                            <h5 class="card-title">Post Title 1</h5>
+                            
                             <p class="card-text">
-                                @foreach (var post in Model)
+                                @{
+                                    int postNumber = 1;
+                                }
+                                @foreach (var post in Model.Take(3))
                                 {
+                                    
+                                    <h5 class="card-title">Post @postNumber</h5>
                                     <a href="#" class="list-group-item list-group-item-action">@post.Title</a>
+                                    postNumber++;
                                 }
                             </p>
                             <a href="#" class="btn btn-primary">Read more</a>

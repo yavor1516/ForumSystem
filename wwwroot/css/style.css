@@ -1,4 +1,7 @@
 ﻿    
+    *{margin:0;
+      padding:0;
+    }
     .form-inline .input-group .form-control,
     .form-inline .input-group .input-group-append .btn {
     margin-left: 9px; /* Space between button and bar */
@@ -49,3 +52,10 @@
     .custom-rounded-corners {
         border-radius: 25px !important; /* This value makes the input more rounded. Adjust as needed */
     }
+
+.sticky-top {
+    position: sticky;
+    top: 0; /* Adjust this value as needed, particularly if you have a fixed header/navbar */
+    z-index: 1020; /* Ensures the sidebar is above other elements but below fixed components like modals */
+    height: 100%; /*regulating*/
+}
