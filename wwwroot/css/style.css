@@ -53,9 +53,16 @@
         border-radius: 25px !important; /* This value makes the input more rounded. Adjust as needed */
     }
 
-.sticky-top {
+header {
     position: sticky;
-    top: 0; /* Adjust this value as needed, particularly if you have a fixed header/navbar */
-    z-index: 1020; /* Ensures the sidebar is above other elements but below fixed components like modals */
+    top: 0;
+    z-index: 300;
+    height: 100%;
+}
+
+.sticky-top {
+  
+    top: 20%; /* Adjust this value as needed, particularly if you have a fixed header/navbar */
+    z-index: 200; /* Ensures the sidebar is above other elements but below fixed components like modals */
     height: 100%; /*regulating*/
 }
