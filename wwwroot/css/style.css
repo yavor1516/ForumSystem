@@ -66,6 +66,7 @@ header {
     z-index: 200; /* Ensures the sidebar is above other elements but below fixed components like modals */
     height: 100%; /*regulating*/
 }
+
 .custom-control-input {
     opacity: 0;
     width: 0;
@@ -110,4 +111,10 @@ header {
 
 .custom-control-input:checked + .custom-control-label:after {
     transform: translateY(-50%) translateX(20px);
+}
+
+.btn.active, .btn.active:hover, .btn.active:focus {
+    background-color: #007bff;
+    border-color: #0056b3; 
+    color: white;
 }

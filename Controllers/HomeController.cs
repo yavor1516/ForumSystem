@@ -16,5 +16,10 @@ namespace ForumSystem.Controllers
             var posts = _postRepository.GetAllPosts();// Retrieve the list of posts from your data source
             return View(posts);
         }
+        public IActionResult Home()
+        {
+            ViewBag.Title = "Home";
+            return View();
+        }
     }
 }
