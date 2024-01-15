@@ -66,3 +66,48 @@ header {
     z-index: 200; /* Ensures the sidebar is above other elements but below fixed components like modals */
     height: 100%; /*regulating*/
 }
+.custom-control-input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.custom-control-label {
+    position: relative;
+    cursor: pointer;
+    padding-left: 55px;
+    display: inline-block;
+}
+
+    .custom-control-label:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 45px;
+        height: 25px;
+        background-color: #ccc;
+        border-radius: 15px;
+    }
+
+    .custom-control-label:after {
+        content: '';
+        position: absolute;
+        left: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 20px;
+        height: 20px;
+        background-color: white;
+        border-radius: 50%;
+        transition: 0.4s;
+    }
+
+.custom-control-input:checked + .custom-control-label:before {
+    background-color: #007bff;
+}
+
+.custom-control-input:checked + .custom-control-label:after {
+    transform: translateY(-50%) translateX(20px);
+}
