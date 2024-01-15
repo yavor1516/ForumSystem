@@ -5,6 +5,7 @@ namespace ForumSystem.Repositories
 {
     public interface IPostRepository
     {
+        public IQueryable<Post> GetPostsByUserId(int userId);
         public Post GetPostByPostId(int id);
         public bool PostExists(string title);//to ask
         public IQueryable<Post> GetAllPosts();

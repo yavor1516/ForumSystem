@@ -6,6 +6,7 @@ namespace ForumSystem.Models
     
     public class User
     {
+       
         [Key]
        
         public int UserID { get; set; }
@@ -32,6 +33,9 @@ namespace ForumSystem.Models
         [AllowNull]
         public string ? phoneNumber { get; set; } // This property allows nulls
         public DateTime RegistrationDate { get; set; }
+
+       // public string? AvatarUrl { get; set; } TODO
+       // public string Bio { get; set; }
         public virtual ICollection<Post> Posts { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
     }

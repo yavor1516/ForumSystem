@@ -1,0 +1,118 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using ForumSystem.Models
+
+
+@model User
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Profile</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="~/css/profile.css" >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    
+    <!-- Add other head elements like meta tags, favicon here -->
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark" style="z-index:800">
+            <div class="container">
+                <a class="navbar-brand" href="#">ForumSystem</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContents">
+                    <form class="form-inline my-2 my-lg-0">
+                        <div class="input-group">
+                            <input type="text" class="form-control custom-rounded-corners" placeholder="Search" aria-label="Search" aria-describedby="button-search">
+
+                            <div class="input-group-append">
+                                <a class="btn btn-primary my-2 my-sm-0 ml-2 round-btn" href="#" role="button"><i class="fa-solid fa-magnifying-glass"></i></a>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="button-container">
+                        <!-- My Profile Button -->
+                        <a class="btn btn-primary my-2 my-sm-0 ml-2" href="/profile" role="button" style="border-radius: 20px;">
+                            <i class="fas fa-user"></i> My Profile
+                        </a>
+                        <!-- LogIn Button -->
+                        <a class="btn btn-primary my-2 my-sm-0 ml-2 round-btn" href="/login" role="button">
+                            <i class="fas fa-plus"></i>
+                        </a>
+                        <!-- Register Button -->
+                        <a class="btn btn-primary my-2 my-sm-0 ml-2 round-btn" href="/register" role="button">
+                            <i class="fa-regular fa-address-card"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!-- Additional navigation items here, below the header navbar -->
+
+
+        <nav class="navbar navbar-expand-lg navbar-custom">
+            <div class="container">
+
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="btn btn-primary rounded-pill @(ViewBag.Title == "Home" ? "active" : "")" href="/" role="button" style="margin-right: 10px;">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-primary rounded-pill @(ViewBag.Title == "Recent" ? "active" : "")" href="#" role="button" style="margin-right: 10px;">Recent</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-primary rounded-pill @(ViewBag.Title == "Favourite" ? "active" : "")" href="#" role="button" style="margin-right: 10px;">Favourite</a>
+                        </li>
+                        <!-- Additional nav-item links here -->
+                    </ul>
+                </div>
+                <span class="navbar-text">
+                    Registered Users: @ViewBag.TotalUsers | Online Users: @ViewBag.UsersOnline
+                </span>
+            </div>
+        </nav>
+
+
+    </header>
+    <div class="container">
+        <!-- Profile Section -->
+        <div class="profile-section mt-3">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="profile-header text-center">
+                        <img src="data:image/jpeg;base64,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" alt="Stancho Geq" class="rounded-circle">
+                        <h3>Stancho Geq</h3>
+                        <p class="text-secondary">stanchofficial</p>
+                        <button class="btn btn-outline-primary btn-sm">CHANGE AVATAR</button>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="post-creation-section mb-3">
+                        <textarea class="form-control mb-2" placeholder="Create New Post"></textarea>
+                        <button class="btn btn-primary btn-sm float-right">Post</button>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="public-switch" checked>
+                            <label class="form-check-label" for="public-switch">PUBLIC</label>
+                        </div>
+                    </div>
+                    <div class="post-analytics bg-light p-3">
+                        <div class="row text-center">
+                            <div class="col"><p>Reads <span class="badge badge-secondary">56</span></p></div>
+                            <div class="col"><p>Comments <span class="badge badge-secondary">3</span></p></div>
+                            <div class="col"><p>Likes <span class="badge badge-secondary">22</span></p></div>
+                            <div class="col"><p>Dislikes <span class="badge badge-secondary">17</span></p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="
+
+https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body>
+</html>

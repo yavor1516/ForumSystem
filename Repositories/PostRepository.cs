@@ -56,6 +56,14 @@ namespace ForumSystem.Repositories
             return post ?? throw new EntityNotFountException($"Post with ID {id} doesn't exist.");
         }
 
+        public IQueryable<Post> GetPostsByUserId(int userId)
+        {
+            return _dbcontext.Posts
+                .Where(x => x.UserID == userId && (x.IsDeleted == null || x.IsDeleted == false))
+                .Include(p => p.Comments)
+                .Include(u => u.User);
+        }
+
         public bool PostExists(string title)
         {
             return _dbcontext.Posts.Any(p => p.Title == title);
