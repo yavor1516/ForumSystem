@@ -19,7 +19,7 @@ public class ProfileController : Controller
     {
         // If you intend to display user profiles, you should pass a ProfileViewModel here
         // Example: return View(new ProfileViewModel());
-        return View("Index");
+        return View(new ProfileViewModel());
     }
 
     public IActionResult Profile(int userId)
@@ -41,6 +41,7 @@ public class ProfileController : Controller
             User = user,
             Posts = posts.ToList() // Convert to a list if necessary
         };
+
 
         return View(viewModel);
     }
