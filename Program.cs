@@ -28,6 +28,7 @@ namespace ForumSystem
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
                 options.EnableSensitiveDataLogging();
             });
+            builder.Services.AddAuthorization();
             // //////////////////////////builder.Configuration.
             //AuthenticationSecretKey with appSettings Bind to specific Object!!
             AuthenticationConfiguration authenticationConfiguration = new AuthenticationConfiguration();
@@ -43,17 +44,20 @@ namespace ForumSystem
                 ValidateAudience = true,
                 
             });
+
+
             ////////////////////////////////////////////////////////////////////////////////////////////////////
 
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<ICommentRepository, CommentRepository>();
             builder.Services.AddScoped<IPostRepository, PostRepository>();
-
+          
             builder.Services.AddScoped<IForumDataService, ForumDataService>();
 
             builder.Services.AddScoped<IModelMapper, ModelMapper>();
-
+            builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<AccessTokenGenerator>();
+            builder.Services.AddScoped<ITokenReader, ForumSystem.Helpers.TokenReader>();
             builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
             builder.Services.AddScoped<ICreateCommentService, CreateCommentService>();
             builder.Services.AddScoped<IEditPostService, EditPostService>();

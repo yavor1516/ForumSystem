@@ -1,10 +1,12 @@
 ﻿using ForumSystem.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
 namespace ForumSystem.Controllers.Api
 {
     [ApiController]
+    
     [Route("/home")]
     public class HomePageController : ControllerBase
     {

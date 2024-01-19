@@ -1,48 +1,63 @@
-﻿using ForumSystem.Models;
+﻿using ForumSystem.Helpers;
+using ForumSystem.Models;
 using ForumSystem.Repositories;
+using ForumSystem.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using System.Linq; // Import System.Linq for ToList()
+using System.Security.Claims;
 
 public class ProfileController : Controller
 {
-    private readonly IUserRepository _userRepository;
-    private readonly IPostRepository _postRepository;
+    private readonly IUserDataService _userDataService;
+    private readonly IForumDataService _forumDataService;
+    private readonly ITokenReader _tokenReader;
 
-    public ProfileController(IUserRepository userRepository, IPostRepository postRepository)
+    public ProfileController(IUserDataService userDataService, IForumDataService forumDataService, ITokenReader tokenReader)
     {
-        _userRepository = userRepository;
-        _postRepository = postRepository;
+        _userDataService = userDataService;
+        _forumDataService = forumDataService;
+        _tokenReader = tokenReader;
     }
 
     [HttpGet]
     public IActionResult Index()
     {
-        // If you intend to display user profiles, you should pass a ProfileViewModel here
-        // Example: return View(new ProfileViewModel());
-        return View(new ProfileViewModel());
-    }
+        var cookie = HttpContext.Request.Cookies;
+        var tokenAsText = cookie["access_token"];
 
-    public IActionResult Profile(int userId)
-    {
-        // Fetch the user and their posts from the database
-        var user = _userRepository.GetUserById(userId); // Replace with your data fetching logic
-
-        // Check if the user is found
-        if (user == null)
+        if (tokenAsText == null)
         {
-            return NotFound(); // Handle the case where the user is not found
+            var model = new ProfileViewModel
+            {
+
+                notAuthenticated = false
+            };
+            return RedirectToAction("Index", "Home");
         }
 
-        // Fetch posts for the user
-        var posts = _postRepository.GetPostsByUserId(userId); // Replace with your data fetching logic
-
-        var viewModel = new ProfileViewModel
+        var user = _tokenReader.GetToken(tokenAsText).FindFirst(ClaimTypes.Name)?.Value;
+        if (user != null)
         {
-            User = user,
-            Posts = posts.ToList() // Convert to a list if necessary
-        };
+            var viewModel = new ProfileViewModel
+            {
+                User = _userDataService.GetByUsername(user),
+                TotalUsers = _forumDataService.GetTotalUsersCount(),
+                Posts = _forumDataService.GetAllPostsByUsername(user),// Convert to a list if necessary
+                notAuthenticated = true
+
+            };
+            return View(viewModel);
+        }
+        else
+        {
+            return RedirectToAction("Index", "Home");
+        }
+        // Fetch the user and their posts from the database
 
 
-        return View(viewModel);
+
     }
+
+   
 }

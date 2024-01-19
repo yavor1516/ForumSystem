@@ -1,25 +1,83 @@
-﻿using ForumSystem.Models;
+﻿using ForumSystem.Helpers;
+using ForumSystem.Models;
 using ForumSystem.Repositories;
+using ForumSystem.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace ForumSystem.Controllers
 {
+  
     public class HomeController : Controller
     {
         private readonly IPostRepository _postRepository;
-        public HomeController(IPostRepository postRepository)
+        private readonly IForumDataService _forumDataService;
+        private readonly IAccountService _accountService;
+        private readonly ITokenReader _tokenReader;
+        public HomeController(IPostRepository postRepository,IForumDataService forumDataService , IAccountService accountService , ITokenReader tokenReader)
         {
             _postRepository = postRepository;
+            _forumDataService = forumDataService;
+            _accountService = accountService;
+            _tokenReader = tokenReader;
         }
+
+
+      
+       
         public IActionResult Index()
         {
-            var posts = _postRepository.GetAllPosts();// Retrieve the list of posts from your data source
-            return View(posts);
+            var cookie = HttpContext.Request.Cookies;
+            var tokenAsText = cookie["access_token"];
+         
+            if(tokenAsText == null)
+            {
+                var viewModel = new HomeVeiwModel
+                {
+                    Posts = _forumDataService.ShowAllPosts(),
+                    registredUsers = _forumDataService.GetTotalUsersCount(),
+                    notAuthenticated = false
+                };
+                return View(viewModel);
+            }
+
+            var user = _tokenReader.GetToken(tokenAsText).FindFirst(ClaimTypes.Name)?.Value;
+            if(user != null)
+            {
+                var viewModel = new HomeVeiwModel
+                {
+                    Posts = _forumDataService.ShowAllPosts(),
+                    registredUsers = _forumDataService.GetTotalUsersCount(),
+                     notAuthenticated = true
+
+                };
+                return View(viewModel);
+            }
+            else
+            {
+                return View(null);
+            }
+            //var posts = _postRepository.GetAllPosts();// Retrieve the list of posts from your data source
+            //return View(posts);
         }
         public IActionResult Home()
         {
-            ViewBag.Title = "Home";
-            return View();
+            var viewModel = new HomeVeiwModel
+            {
+                Posts = _forumDataService.ShowAllPosts(),
+                registredUsers = _forumDataService.GetTotalUsersCount()
+
+
+            };
+            return View(viewModel);
+            //ViewBag.Title = "Home";
+            //ViewBag.TotalUsers = "33";
+            //ViewBag.UsersOnline = "3";
+
+            //return View();
         }
     }
 }

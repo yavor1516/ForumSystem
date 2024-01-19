@@ -68,5 +68,10 @@ namespace ForumSystem.Services
         {
             return _postRepository.GetPostByPostId(id);
         }
+
+        public IQueryable<Post> GetAllPostsByUsername(string username)
+        {
+            return _postRepository.GetPostsByUserId(_userRepository.GetUserByUsername(username).UserID);
+        }
     }
 }

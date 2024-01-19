@@ -1,4 +1,11 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Register";
+}
+
+@using ForumSystem.Models.DTO
+@model UserDto
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -85,28 +92,35 @@
             <div class="col-md-6 mx-auto">
                 <div class="login-container">
                     <h2 class="text-center">Register</h2>
-                    <form>
+                    <form asp-controller="Register" asp-action="Register" method="post">
                         <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="text" class="form-control" id="email" placeholder="Enter your email">
+                            <label asp-for="Email"></label>
+                            <input type="text" class="form-control" asp-for="Email" placeholder="Enter your email">
                         </div>
                         <div class="form-group">
-                            <label for="username">Username</label>
-                            <input type="text" class="form-control" id="username" placeholder="Enter your username">
+                            <label asp-for="Username"></label>
+                            <input type="text" class="form-control" asp-for="Username" placeholder="Enter your username">
+                            <span asp-validation-for="Username" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="text" class="form-control" id="password" placeholder="Enter your password">
+                            <label asp-for="Password"></label>
+                            <input type="text" class="form-control" asp-for="Password" placeholder="Enter your password">
+                            <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label for="firstname">Firstname</label>
-                            <input type="text" class="form-control" id="firstname" placeholder="Enter your firstname">
+                            <label asp-for="FirstName"></label>
+                            <input type="text" class="form-control" asp-for="FirstName" placeholder="Enter your firstname">
                         </div>
                         <div class="form-group">
-                            <label for="lastname">Lastname</label>
-                            <input type="text" class="form-control" id="lastname" placeholder="Enter your lastname">
+                            <label asp-for="LastName"></label>
+                            <input type="text" class="form-control" asp-for="LastName" placeholder="Enter your lastname">
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block">Register</button>
+                        <form method="post" asp-action="Register" asp-controller="Register">
+                            <!-- Your form fields remain the same -->
+                            <!-- ... -->
+                            <button type="submit" class="btn btn-primary btn-block">Register</button>
+                        </form>
+                       
                     </form>
                 </div>
             </div>

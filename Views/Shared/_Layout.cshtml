@@ -1,6 +1,6 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @using ForumSystem.Models
-@model IQueryable<Post>
+@model HomeVeiwModel
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,26 +25,53 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContents">
                                        <form class="form-inline my-2 my-lg-0">
                         <div class="input-group">
-                            <input type="text" class="form-control custom-rounded-corners" placeholder="Search" aria-label="Search" aria-describedby="button-search">
+                            <input type="text" class="form-control custom-rounded-corners" placeholder="Search"  aria-label="Search" aria-describedby="button-search">
 
                             <div class="input-group-append">
                                 <a class="btn btn-primary my-2 my-sm-0 ml-2 round-btn" href="#" role="button"><i class="fa-solid fa-magnifying-glass"></i></a>
+                                
                             </div>
                         </div>
                     </form>
                     <div class="button-container">
-                        <!-- My Profile Button -->
-                        <a class="btn btn-primary my-2 my-sm-0 ml-2" href="/profile" role="button" style="border-radius: 20px;">
-                            <i class="fas fa-user"></i> My Profile
-                        </a>
-                        <!-- LogIn Button -->
-                        <a class="btn btn-primary my-2 my-sm-0 ml-2 round-btn" href="/login" role="button">
-                            <i class="fas fa-plus"></i>
-                        </a>
-                        <!-- Register Button -->
-                        <a class="btn btn-primary my-2 my-sm-0 ml-2 round-btn" href="/register" role="button">
-                            <i class="fa-regular fa-address-card"></i>
-                        </a>
+                        @if(Model.notAuthenticated == false)
+                        {
+                            <a class="btn btn-primary rounded-pill">
+                                <i class="fa-solid fa-user-secret"></i>
+                                <span>GUEST</span>
+                                
+                            </a>
+                            <a class="btn btn-primary my-2 my-sm-0 ml-2 round-btn" href="/LogIn" role="button">
+                                <i class="fa-solid fa-right-to-bracket"></i>
+                            </a>
+                            <a class="btn btn-primary my-2 my-sm-0 ml-2 round-btn" href="/Register" role="button">
+                                <i class="fa-regular fa-address-card"></i>
+                            </a>
+
+                            
+                          
+                        }
+                        else
+                        {
+                           
+                            <!-- My Profile Button -->
+                            <a class="btn btn-primary my-2 my-sm-0 ml-2" href="/profile" role="button" style="border-radius: 20px;">
+                                <img src="https://scontent.fsof8-1.fna.fbcdn.net/v/t39.30808-6/401100655_6868772089848749_7998497238877845281_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=iVXq6rCSQoYAX8pT__t&_nc_ht=scontent.fsof8-1.fna&oh=00_AfCTCJrLogM5bnxG2uareJWfmymn3CbAieysagRCgzGSxw&oe=65AE6546" class="rounded-circle" width="32" height="32">
+
+
+
+                                <span>harli_boy</span>
+                            </a>
+                            <!-- LogIn Button -->
+                            <!-- Register Button -->
+
+
+                            <a class="btn btn-primary my-2 my-sm-0 ml-2 round-btn" href="/Logout" role="button">
+
+                                <i class="fa-solid fa-right-from-bracket"></i>
+                            </a>
+                        }
+                        
                     </div>
                 </div>
             </div>
@@ -69,40 +96,74 @@
                         <!-- Additional nav-item links here -->
                     </ul>
                 </div>
+                <style>
+                    .navbar-text{
+                        position:sticky;
+                    }
+                </style>
                 <span class="navbar-text">
-                    Registered Users: @ViewBag.TotalUsers | Online Users: @ViewBag.UsersOnline
+                    Registered Users: @Model.registredUsers | Online Users: @ViewBag.UsersOnline
                 </span>
             </div>
         </nav>
 
 
     </header>
-   
+  
 
     <main role="main" class="container mt-4" style="
     margin:auto;">
+
         <div class="row">
+            <style>
+                .sticky-top {
+                    top:22%;
+                }
+
+                .top-posts {
+                    width : 320px;
+                    left:100px;
+                    font-size:10px;
+                }
+            </style>
             <!-- Top 3 Posts of the Day Section -->
             <div class="col-md-4 sticky-top">
                 <div class="top-posts">
-                    <h2 class="mb-3">Top 3 Posts of the Day</h2>
+                   
+                    <div class="card-header">
+                        <span>Top 3 Posts of the Day</span>
+                        
+                    </div>
                     <!-- Example post (repeat for each top post) -->
                     <div class="card mb-2">
                         <div class="card-body">
-                            
-                            <p class="card-text">
-                                @{
-                                    int postNumber = 1;
-                                }
-                                @foreach (var post in Model.Take(3))
-                                {
-                                    
-                                    <h5 class="card-title">Post @postNumber</h5>
-                                    <a href="#" class="list-group-item list-group-item-action">@post.Title</a>
-                                    postNumber++;
-                                }
-                            </p>
-                            <a href="#" class="btn btn-primary">Read more</a>
+
+                            @foreach (var post in Model.Posts.Take(3))
+                            {
+                                <div class="post-container">
+                                    <a class="btn btn-light">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 48 48" height="32" width="32"><g id="search-comment-history"><path id="Subtract" fill="#8fbffa" d="M7.143 0.966C10.408 0.74 15.597 0.5 23 0.5c7.403 0 12.592 0.239 15.857 0.466 3.265 0.228 5.861 2.693 6.152 5.993 0.249 2.835 0.491 7.115 0.491 13.041 0 2.952 -0.06 5.495 -0.151 7.654A12.996 12.996 0 0 0 34 21c-7.18 0 -13 5.82 -13 13 0 2.166 0.53 4.208 1.467 6.004l-6.19 5.305c-2.27 1.946 -5.777 0.333 -5.777 -2.657V39.23a166.88 166.88 0 0 1 -3.357 -0.196c-3.265 -0.228 -5.862 -2.693 -6.152 -5.993C0.742 30.206 0.5 25.926 0.5 20S0.742 9.794 0.991 6.959c0.29 -3.3 2.887 -5.765 6.152 -5.993Z" stroke-width="1"></path><g id="Vector"><path fill="#2859c5" fill-rule="evenodd" d="M9 12a2 2 0 0 1 2 -2h24a2 2 0 1 1 0 4H11a2 2 0 0 1 -2 -2Z" clip-rule="evenodd" stroke-width="1"></path><path fill="#2859c5" fill-rule="evenodd" d="M9 22a2 2 0 0 1 2 -2h10a2 2 0 1 1 0 4H11a2 2 0 0 1 -2 -2Z" clip-rule="evenodd" stroke-width="1"></path></g><path id="Union" fill="#2859c5" d="M42.885 38.594A9.958 9.958 0 0 0 44 34c0 -5.523 -4.477 -10 -10 -10s-10 4.477 -10 10 4.477 10 10 10c1.69 0 3.281 -0.42 4.677 -1.159 0.93 1.121 1.854 2.226 2.873 3.318 1.081 1.157 2.718 1.3 3.863 0.206a31.861 31.861 0 0 0 1.017 -1.018c1.095 -1.144 0.952 -2.78 -0.206 -3.862 -1.098 -1.026 -2.21 -1.955 -3.34 -2.891Z" stroke-width="1"></path><path id="Union_2" fill="#8fbffa" d="M34 29a5 5 0 1 0 0 10 5 5 0 0 0 0 -10Z" stroke-width="1"></path></g></svg>
+                                    </a>
+                                    <h5 class="post-title">@post.Title</h5>
+                                </div>
+                                <div class="content-container">
+                                    <p class="post-content">Dancho e gei no tova mu prilicha toi obicha jenski da se oblicha i v ustata da se spichaDancho e gei no tova mu prilicha toi obicha jenski da se oblicha i v ustata da se spichaDancho e gei no tova mu prilicha toi obicha jenski da se oblicha i v ustata da se spicha</p>
+                                </div>
+                                <div class="readmore-container">
+                                    <button class="ffs">Read more</button>
+
+                                    <i class="fa-regular fa-eye">
+                                        <span>33</span>
+                                    </i>
+                                    <i class="fa-regular fa-thumbs-up">
+                                        <span>12</span>
+                                    </i>
+                                    <i class="fa-regular fa-thumbs-down">
+                                        <span>3</span>
+                                    </i>
+
+                                </div>
+                            }
                         </div>
                     </div>
                     <!-- Repeat for other top posts -->

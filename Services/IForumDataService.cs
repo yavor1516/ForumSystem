@@ -6,6 +6,7 @@ namespace ForumSystem.Services
     {
      public void DeletePost(int id);        
      public IQueryable<Post> ShowAllPosts();
+        public IQueryable<Post> GetAllPostsByUsername(string username);
      public IEnumerable<Post> GetRecentPosts(int numberOfRecentPosts);
 
      public Post GetPostByPostId(int id);

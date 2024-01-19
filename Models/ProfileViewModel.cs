@@ -9,7 +9,11 @@ namespace ForumSystem.Models
         
         public User User { get; set; }
         public IEnumerable<Post> Posts { get; set; }
-        
+
+        public int TotalUsers { get; set; }
+        public bool notAuthenticated { get; set; }
+
+
     }
     
 }

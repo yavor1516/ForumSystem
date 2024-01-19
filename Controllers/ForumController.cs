@@ -17,32 +17,40 @@ namespace ForumSystem.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-           var posts = _forumDataService.ShowAllPosts();
-            return View(posts);
+            var viewModel = new HomeVeiwModel
+            {
+                Posts = _forumDataService.ShowAllPosts(),
+                registredUsers = _forumDataService.GetTotalUsersCount()
+
+
+            };
+          //  var posts = _forumDataService.ShowAllPosts();
+            return View(viewModel);
         }
 
-        [HttpGet]
-        public IActionResult Details(int id)
-        {
-            try
-            {
-                Post post = _forumDataService.GetPostByPostId(id);
-                return View(post);
-            }
-            catch (EntityNotFountException ex)
-            {
-                Response.StatusCode = StatusCodes.Status404NotFound;
-                ViewData["Error"]=ex.Message;
-                return View("Error");
-            }
-        }
+        //[HttpGet]
+        //public IActionResult Details(int id)
+        //{
 
-        [HttpGet]
-        public IActionResult Create() 
-        {
-            var post = new PostViewModel();
-            return View(post);
-        }
+        //    //try
+        //    //{
+        //    //    Post post = _forumDataService.GetPostByPostId(id);
+        //    //    return View(post);
+        //    //}
+        //    //catch (EntityNotFountException ex)
+        //    //{
+        //    //    Response.StatusCode = StatusCodes.Status404NotFound;
+        //    //    ViewData["Error"]=ex.Message;
+        //    //    return View("Error");
+        //    //}
+        //}
+
+        //[HttpGet]
+        //public IActionResult Create() 
+        //{
+        //    var post = new PostViewModel();
+        //    return View(post);
+        //}
 
       /*  [HttpPost]
         public IActionResult Create(PostViewModel postViewModel) 

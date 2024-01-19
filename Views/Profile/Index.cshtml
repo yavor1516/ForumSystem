@@ -114,7 +114,8 @@
                         <input type="text" class="form-control custom-rounded-corners" placeholder="Search" aria-label="Search" aria-describedby="button-search">
 
                         <div class="input-group-append">
-                            <a class="btn btn-primary my-2 my-sm-0 ml-2 round-btn" href="#" role="button"><i class="fa-solid fa-magnifying-glass"></i></a>
+                            <a class="
+" href="#" role="button"><i class="fa-solid fa-magnifying-glass"></i></a>
                         </div>
                     </div>
                 </form>
@@ -156,7 +157,7 @@
                 </ul>
             </div>
             <span class="navbar-text">
-                Registered Users: @ViewBag.TotalUsers | Online Users: @ViewBag.UsersOnline
+                Registered Users: @Model.TotalUsers | Online Users: @ViewBag.UsersOnline
             </span>
         </div>
     </nav>
@@ -177,10 +178,10 @@
                             <div class="card-body">
                                 <div class="text-center">
                                     <img src="~/photos/profilepic.jpg" alt="Current Profile Picture" class="profile-pic img-fluid">
-                                    <h4 class="card-title">Username Here</h4>
-                                    <p>Firstname Here</p>
-                                    <p>Lastname Here</p>
-                                    <p>Email Here</p>
+                                    <h4 class="card-title">@Model.User.Username</h4>
+                                    <p>@Model.User.FirstName</p>
+                                    <p>@Model.User.LastName</p>
+                                    <p>@Model.User.Email</p>
                                 </div>
                             </div>
                         </div>

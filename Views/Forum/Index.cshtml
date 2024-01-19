@@ -1,6 +1,6 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @using ForumSystem.Models
-@model IQueryable<Post>
+@model HomeVeiwModel
 
 <html>
 <head>
@@ -27,7 +27,7 @@
                 <th>Open</th>
             </tr>
             @{
-                foreach(var post in Model)
+                foreach(var post in Model.Posts)
                 {
                     <tr>
                         <td>@post.PostID</td>
