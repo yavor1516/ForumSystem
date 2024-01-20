@@ -8,6 +8,7 @@ namespace ForumSystem.Helpers
        
         public ClaimsPrincipal GetToken(string tokenAsText)
         {
+
             var tokenTest = new JwtSecurityTokenHandler().ReadJwtToken(tokenAsText);
             var identity = new ClaimsPrincipal(new ClaimsIdentity(tokenTest.Claims));
             return identity;

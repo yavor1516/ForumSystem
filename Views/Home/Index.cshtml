@@ -19,6 +19,10 @@
         <!-- Main content area -->
         <div class="col-md-8">
             <!-- Create New Post Section -->
+            @if(Model.notAuthenticated == true)
+            {
+                
+          
             <div class="card mb-4">
                 <div class="card-header">
                     Create New Post
@@ -45,7 +49,7 @@
                     </form>
                 </div>
             </div>
-            
+            }
             <style>
                 .mb-4{
                     width :680px;
@@ -60,7 +64,7 @@
                 <ul class="list-group list-group-flush">
                     @if (Model.notAuthenticated == true)
                     {
-                        foreach (var post in Model.Posts.Take(3))
+                        foreach (var post in Model.Posts.Where(x=>x.IsDeleted != true))
                         {
                             <li class="list-group-item">
 
@@ -107,7 +111,7 @@
                                     <h5 class="post-title">@post.Title</h5>
                                 </div>
                                 <div class="content-container">
-                                    <p class="post-content">Dancho e gei no tova mu prilicha toi obicha jenski da se oblicha i v ustata da se spichaDancho e gei no tova mu prilicha toi obicha jenski da se oblicha i v ustata da se spichaDancho e gei no tova mu prilicha toi obicha jenski da se oblicha i v ustata da se spicha</p>
+                                    <p class="post-content">@post.Content</p>
                                 </div>
 
                                 <!-- Post meta data here -->
@@ -249,7 +253,7 @@
                     }
                     else
                     {
-                        foreach (var post in Model.Posts.Where(x => x.IsPublic == true))
+                        foreach (var post in Model.Posts.Where(x => x.IsPublic == true && x.IsDeleted != true))
                         {
                             <li class="list-group-item">
 
@@ -436,8 +440,7 @@
                     }
 
                        
-                    }
-                    }
+                    
 
                    
                    

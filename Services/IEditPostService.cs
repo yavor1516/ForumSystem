@@ -9,5 +9,10 @@ namespace ForumSystem.Services
         public bool DeletePost(int id);
 
         public Post GetPostById(int id);
+
+        public Comment GetCommentById(int id);
+        public Comment DeleteCommentById(int id);
+
+        public Comment EditComment(int id, Comment comment);
     }
 }

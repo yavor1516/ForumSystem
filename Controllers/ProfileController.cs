@@ -25,7 +25,7 @@ public class ProfileController : Controller
     {
         var cookie = HttpContext.Request.Cookies;
         var tokenAsText = cookie["access_token"];
-
+        ViewBag.Title = "Home";
         if (tokenAsText == null)
         {
             var model = new ProfileViewModel
@@ -47,6 +47,7 @@ public class ProfileController : Controller
                 notAuthenticated = true
 
             };
+
             return View(viewModel);
         }
         else

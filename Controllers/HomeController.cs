@@ -39,6 +39,7 @@ namespace ForumSystem.Controllers
                 {
                     Posts = _forumDataService.ShowAllPosts(),
                     registredUsers = _forumDataService.GetTotalUsersCount(),
+                    onlineUsers = _forumDataService.GetOnlineUsers(),
                     notAuthenticated = false
                 };
                 return View(viewModel);
@@ -51,6 +52,7 @@ namespace ForumSystem.Controllers
                 {
                     Posts = _forumDataService.ShowAllPosts(),
                     registredUsers = _forumDataService.GetTotalUsersCount(),
+                    onlineUsers = _forumDataService.GetOnlineUsers(),
                      notAuthenticated = true
 
                 };
@@ -68,7 +70,8 @@ namespace ForumSystem.Controllers
             var viewModel = new HomeVeiwModel
             {
                 Posts = _forumDataService.ShowAllPosts(),
-                registredUsers = _forumDataService.GetTotalUsersCount()
+                registredUsers = _forumDataService.GetTotalUsersCount(),
+                onlineUsers = _forumDataService.GetOnlineUsers()
 
 
             };

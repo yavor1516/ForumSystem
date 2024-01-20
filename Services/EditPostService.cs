@@ -7,9 +7,11 @@ namespace ForumSystem.Services
     public class EditPostService:IEditPostService
     {
         private readonly IPostRepository _postRepository;
-        public EditPostService(IPostRepository editPostService) 
+        private readonly ICommentRepository _commentRepository;
+        public EditPostService(IPostRepository editPostService,ICommentRepository commentRepository) 
         { 
             _postRepository = editPostService;
+            _commentRepository = commentRepository;
         }
         public Post EditPost(EditPostDTO editPostDTO , int Postid) 
         {
@@ -39,6 +41,21 @@ namespace ForumSystem.Services
         public Post GetPostById(int id)
         {
             return _postRepository.GetPostByPostId(id);
+        }
+
+        public Comment GetCommentById(int id)
+        {
+            return _commentRepository.GetCommentById(id);
+        }
+
+        public Comment DeleteCommentById(int id)
+        {
+            return _commentRepository.DeleteComment(id);
+        }
+
+        public Comment EditComment(int id, Comment comment)
+        {
+            return _commentRepository.UpdateComment(id,comment);
         }
     }
 }

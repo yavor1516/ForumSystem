@@ -16,5 +16,8 @@ namespace ForumSystem.Services
      public int GetTotalCommentsCount();
      public int GetTotalLikesCount();
 
+        public int GetOnlineUsers();
+        public User UpdateUserStatus(User user);
+
     }
 }

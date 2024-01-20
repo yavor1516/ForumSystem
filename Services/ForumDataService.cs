@@ -73,5 +73,15 @@ namespace ForumSystem.Services
         {
             return _postRepository.GetPostsByUserId(_userRepository.GetUserByUsername(username).UserID);
         }
+
+        public int GetOnlineUsers()
+        {
+            return _userRepository.GetAllUsers().Where(x => x.isOnline == true).Count();
+        }
+
+        public User UpdateUserStatus(User user)
+        {
+            return _userRepository.UpdateUser(user);
+        }
     }
 }

@@ -79,7 +79,14 @@ namespace ForumSystem
                 name: "post",
                 pattern: "post/{id:int}",
                 defaults: new { controller = "Post", action = "Index" });
-
+            app.MapControllerRoute(
+                 name: "delete",
+                 pattern: "post/delete/{itemId:int}", // Change the pattern to be more specific
+                 defaults: new { controller = "Post", action = "Delete" });
+            app.MapControllerRoute(
+             name: "editComment",
+             pattern: "post/edit/{itemId:int}/{content?}", // Updated pattern for editing
+             defaults: new { controller = "Post", action = "EditComment" });
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");

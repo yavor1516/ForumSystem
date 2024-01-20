@@ -117,6 +117,26 @@
                     </div>
                 </form>
                 <div class="button-container">
+                    @if (Model.notAuthenticated == true)
+                    {
+                        <a class="btn btn-primary my-2 my-sm-0 ml-2" href="/profile" role="button" style="border-radius: 20px;">
+                            <img src="https://scontent.fsof8-1.fna.fbcdn.net/v/t39.30808-6/401100655_6868772089848749_7998497238877845281_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=iVXq6rCSQoYAX8pT__t&_nc_ht=scontent.fsof8-1.fna&oh=00_AfCTCJrLogM5bnxG2uareJWfmymn3CbAieysagRCgzGSxw&oe=65AE6546" class="rounded-circle" width="32" height="32">
+
+
+
+                            <span>harli_boy</span>
+                        </a>
+                        <!-- LogIn Button -->
+                        <!-- Register Button -->
+
+
+                        <a class="btn btn-primary my-2 my-sm-0 ml-2 round-btn" href="/Logout" role="button">
+
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                        </a>
+                    }
+                    else
+                    {
                     <!-- My Profile Button -->
                     <a class="btn btn-primary my-2 my-sm-0 ml-2" href="/profile" role="button" style="border-radius: 20px;">
                         <i class="fas fa-user"></i> My Profile
@@ -129,6 +149,7 @@
                     <a class="btn btn-primary my-2 my-sm-0 ml-2 round-btn" href="/register" role="button">
                         <i class="fa-regular fa-address-card"></i>
                     </a>
+                    }
                 </div>
             </div>
         </div>
@@ -173,8 +194,16 @@
                     </button>
                     
                     <div class="card-footer text-end">
-                        <button type="button" class="btn btn-primary rounded-pill">Edit</button>
-                        <button type="button" class="btn btn-danger rounded-pill">Delete</button>
+                        @if(Model.User != null)
+                        {
+                            if (Model.User.UserID == Model.Post.UserID || Model.User.IsAdmin == true)
+                            {
+                                <button type="button" class="btn btn-primary rounded-pill">Edit</button>
+                                <button type="button" class="btn btn-danger rounded-pill">Delete</button>
+                            }
+                        }
+                       
+                       
                     </div>
                 </div>
             </div>
@@ -182,16 +211,60 @@
             <!-- Comments Section -->
             <div class="comments">
                 <h5>Comments</h5>
-                @foreach(Comment comment in Model.Post.Comments)
+                @foreach(Comment comment in Model.Post.Comments.Where(x=>x.isDeleted != true))
                 {
                     <div class="card mb-3">
                         <div class="card-body">
                             <p class="card-text">@comment.Content</p>
                         </div>
                         <div class="card-footer text-end">
-                            <button type="button" class="btn btn-primary rounded-pill">Edit</button>
-                            <button type="button" class="btn btn-danger rounded-pill">Delete</button>
-                        </div>
+                             @if(Model.User != null)
+                        {
+                                if (Model.User.UserID == comment.UserID|| Model.User.IsAdmin == true)
+                                {
+                                    <div id="editFormContainer"></div>
+
+                                    <button type="button" class="btn btn-primary rounded-pill" onclick="showEditForm()">Edit</button>
+
+                                    <script>
+                                        function showEditForm() {
+                                            // Get the container element
+                                            var container = document.getElementById("editFormContainer");
+
+                                            // Create input fields for editing
+                                            var editFormHtml = `
+                                                    <form method="post" action="/post/edit/@comment.CommentID">
+                                                        <div class="form-group">
+                                                            <label for="editField">Edit Field:</label>
+                                                            <input type="text" class="form-control" id="editField" name="editField" value="@(comment.Content)">
+                                                        </div>
+
+                                                                                  <form method="post" action="/post/editComment/@comment.CommentID" id="editComment">
+                                                                                <!-- Use the generated URL based on the defined route -->
+                                                                                <input type="hidden" name="itemId" value="@comment.CommentID" />
+                                                                                <button type="submit" class="btn btn-danger rounded-pill">Update</button>
+                                                                            </form>
+                                                        <button type="button" class="btn btn-secondary rounded-pill" onclick="cancelEdit()">Cancel</button>
+                                                    </form>
+                                                `;
+
+                                            // Set the HTML content of the container to the edit form
+                                            container.innerHTML = editFormHtml;
+                                        }
+
+                                        function cancelEdit() {
+                                            // Simply clear the edit form container
+                                            document.getElementById("editFormContainer").innerHTML = "";
+                                        }
+                                    </script>
+                                    <form method="post" action="/post/delete/@comment.CommentID" id="deleteForm">
+                                        <!-- Use the generated URL based on the defined route -->
+                                        <input type="hidden" name="itemId" value="@comment.CommentID" />
+                                        <button type="submit" class="btn btn-danger rounded-pill">Delete</button>
+                                    </form>
+                                }
+                        }
+                                </div>
                     </div>
                 }
  

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using ForumSystem.Models;
 
 namespace ForumSystem.Controllers
 {
@@ -12,11 +13,15 @@ namespace ForumSystem.Controllers
     {
         private readonly IAccountService _accountService;
         private readonly IAuthService _authService;
+        private readonly IUserDataService _userDataService;
+        private readonly IForumDataService _forumDataService;
 
-        public LogInController(IAccountService accountService, IAuthService authService)
+        public LogInController(IAccountService accountService, IAuthService authService, IUserDataService userDataService, IForumDataService forumDataService)
         {
             _accountService = accountService;
             _authService = authService;
+            _userDataService = userDataService;
+            _forumDataService = forumDataService;
         }
 
         [HttpGet]
@@ -46,6 +51,7 @@ namespace ForumSystem.Controllers
             try
             {
                 var user = _accountService.LoginUser(loginRequest);
+
                 AuthenticatedUserResponse token = new AuthenticatedUserResponse()
                 {
                     accessToken = _accountService.GenerateToken(user)
@@ -60,7 +66,9 @@ namespace ForumSystem.Controllers
 
                 // Store the access token in an HttpOnly cookie
                 //  var token = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-
+                User userToUpdate = _userDataService.GetByUsername(user.Username);
+                userToUpdate.isOnline = true;
+                _forumDataService.UpdateUserStatus(userToUpdate);
                 return RedirectToAction("Index", "Home");
                 
             }
