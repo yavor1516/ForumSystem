@@ -114,8 +114,8 @@
                         <input type="text" class="form-control custom-rounded-corners" placeholder="Search" aria-label="Search" aria-describedby="button-search">
 
                         <div class="input-group-append">
-                            <a class="
-" href="#" role="button"><i class="fa-solid fa-magnifying-glass"></i></a>
+                            <a class="btn btn-primary my-2 my-sm-0 ml-2 round-btn" href="#" role="button"><i class="fa-solid fa-magnifying-glass"></i></a>
+
                         </div>
                     </div>
                 </form>
@@ -145,13 +145,10 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="btn btn-primary rounded-pill @(ViewBag.Title == "Home" ? "active" : "")" href="/" role="button" style="margin-right: 10px;">Home</a>
+                        <a class="btn btn-primary rounded-pill @(ViewBag.Title == "Home" ? "active" : "")" href="/home" role="button" style="margin-right: 10px;">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="btn btn-primary rounded-pill @(ViewBag.Title == "Recent" ? "active" : "")" href="#" role="button" style="margin-right: 10px;">Recent</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="btn btn-primary rounded-pill @(ViewBag.Title == "Favourite" ? "active" : "")" href="#" role="button" style="margin-right: 10px;">Favourite</a>
+                        <a class="btn btn-primary rounded-pill @(ViewBag.Title == "Feed" ? "active" : "")" href="/feed" role="button" style="margin-right: 10px;">Feed</a>
                     </li>
                     <!-- Additional nav-item links here -->
                 </ul>
