@@ -21,12 +21,12 @@
         <h2>Create New Post</h2>
 
         <form asp-controller="Forum" asp-action="Create">
-            <label asp-for="Title">Title:</label><br>
-            <input type="text" asp-for="Title"><br>
-            <label asp-for="Content">Content:</label><br>
-            <input type="text" asp-for="Content"><br>
-            <label asp-for="@Model.IsPublic">Public:</label><br> 
-            <input type="checkbox" asp-for="IsPublic"><br>
+            <label asp-for="@Model.Post.Title">Title:</label><br>
+            <input type="text" asp-for="@Model.Post.Title"><br>
+            <label asp-for="@Model.Post.Content">Content:</label><br>
+            <input type="text" asp-for="@Model.Post.Content"><br>
+            <label asp-for="@Model.Post.IsPublic">Public:</label><br> 
+            <input type="checkbox" asp-for="@Model.Post.IsPublic"><br>
             
             <input type="submit" value="Post">
         </form>

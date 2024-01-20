@@ -75,6 +75,15 @@ namespace ForumSystem
                 var dbContext = services.GetRequiredService<ForumContext>();
                 DbInitializer.Initialize(dbContext);
             }
+            app.MapControllerRoute(
+                name: "post",
+                pattern: "post/{id:int}",
+                defaults: new { controller = "Post", action = "Index" });
+
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+
             //  app.MapGet("/", () => "Hello World!");
             app.UseStaticFiles();
             app.MapDefaultControllerRoute();

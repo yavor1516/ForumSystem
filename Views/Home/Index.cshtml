@@ -11,6 +11,7 @@
     <!-- Add references to other Bootstrap CSS files if needed -->
     <link rel="stylesheet" href="~/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
 </head>
 
 <main role="main" class="container mt-4">
@@ -39,7 +40,7 @@
                             <input type="checkbox" class="custom-control-input" id="postVisibility">
                             <label class="custom-control-label mt-2 mb-2" for="postVisibility">Public</label>
                         </div>
-
+                        
                         <button type="submit" class="btn btn-primary rounded-pill">Submit</button>
                     </form>
                 </div>
@@ -139,7 +140,7 @@
                                     }
                                 </style>
                                 <div class="readmore-container">
-                                    <a href="/post" style="text-decoration: none; color: inherit;">
+                                    <a href="/post/@post.PostID" style="text-decoration: none; color: inherit;">
                                         <button class="ffs">Read more</button>
                                     </a>
 
