@@ -25,11 +25,6 @@ namespace ForumSystem.Services
             existingPost.Content = editPostDTO.Content;
             existingPost.IsPublic = editPostDTO.isPublic;
 
-            
-            
-
-
-
             return _postRepository.Update((int)existingPost.PostID, existingPost); ;
         }
         public bool DeletePost(int id)

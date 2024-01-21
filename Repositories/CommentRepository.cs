@@ -57,7 +57,8 @@ namespace ForumSystem.Repositories
         public Comment UpdateComment(int id, Comment comment)
         {
             Comment commentToUpdate=GetCommentById(id);
-            commentToUpdate.Content=comment.Content;
+            commentToUpdate.Content = comment.Content;
+            
             _dbcontext.SaveChanges(); 
             return commentToUpdate;
         }

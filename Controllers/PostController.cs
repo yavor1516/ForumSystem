@@ -19,7 +19,7 @@ namespace ForumSystem.Controllers
             _userDataService = userDataService;
             _editPostService = editPostService;
         }
-        [HttpPut]
+        [HttpPost]
         public IActionResult Delete(int itemId)
         {
 
@@ -29,16 +29,16 @@ namespace ForumSystem.Controllers
             return RedirectToAction("Index", "Home");
         }
         [HttpPost]
-        public IActionResult EditComment(int itemId, PostViewModel postview)
+        //public IActionResult EditComment(int itemId, PostViewModel postview)
+        public IActionResult EditComment([FromForm] EditedCommentModel model)
         {
-            Comment updatedComment = _editPostService.GetCommentById(itemId);
-            updatedComment.Content = postview.CommentContent;
-            _editPostService.EditComment(itemId, updatedComment);
-            // Your deletion logic here using the itemId parameter
-            var post = _editPostService.DeleteCommentById(itemId);
-            // Redirect or return a response as needed
-            return RedirectToAction("Index", "Home");
-        }
+			Comment updatedComment = _editPostService.GetCommentById(model.CommentID);
+            updatedComment.Content = model.Content ?? "noupdate";// postview.CommentContent;
+            _editPostService.EditComment(model.CommentID, updatedComment);
+
+			// Redirect or return a response as needed
+			return RedirectToAction("Index", "Home");
+		}
         public IActionResult Index(int id)
         {
             var cookie = HttpContext.Request.Cookies;
