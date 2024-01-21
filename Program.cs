@@ -87,7 +87,11 @@ namespace ForumSystem
              name: "editComment",
              pattern: "post/edit/{itemId:int}/{content?}", // Updated pattern for editing
              defaults: new { controller = "Post", action = "EditComment" });
-            app.MapControllerRoute(
+			app.MapControllerRoute(
+			name: "createComment",
+			pattern: "post/createComment/{content?}", // Updated pattern for editing
+			defaults: new { controller = "Post", action = "CreateComment" });
+			app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 

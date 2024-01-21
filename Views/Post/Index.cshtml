@@ -202,7 +202,17 @@
 								<button type="button" class="btn btn-danger rounded-pill">Delete</button>
 							}
 						}
+						
+						<form method="post" action="/post/createComment">
+							<div class="form-group">
+								<input type="hidden" name="PostID" value="@Model.Post.PostID" />
+								<input type="text" class="form-control" name="content" />
+								<input type="submit" class="btn btn-success rounded-pill" />
 
+								
+							</div>
+						</form>
+						
 
 					</div>
 				</div>
@@ -222,7 +232,12 @@
 							{
 								if (Model.User.UserID == comment.UserID || Model.User.IsAdmin == true)
 								{
-									<div class="editFormContainer" style="">
+									<style>
+										.editFormContainer {
+											display:none;
+										}
+									</style>
+									<div id="myDIV" class="editFormContainer" style="">
 										<form method="post" action="/post/editComment">
 											<div class="form-group">
 												<input type="hidden" name="postId" value="@comment.PostID" />
@@ -231,13 +246,22 @@
 												<input type="submit" class="btn btn-success rounded-pill"/>
 											</div>
 										</form>
-										<form method="post" action="/post/delete/@comment.CommentID" id="deleteForm">
-											<input type="hidden" name="itemId" value="@comment.CommentID" />
-											<button type="submit" class="btn btn-danger rounded-pill">Delete</button>
-										</form>
 									</div>
-
-									<button type="button" class="btn btn-primary rounded-pill" onclick="alert('usmihnisewe')">Edit</button>
+									<form method="post" action="/post/delete/@comment.CommentID" id="deleteForm">
+										<input type="hidden" name="itemId" value="@comment.CommentID" />
+										<button type="submit" class="btn btn-danger rounded-pill">Delete</button>
+									</form>
+									<button class="btn btn-danger rounded-pill" onclick="myFunction()">Edit</button>
+									<script>
+										function myFunction() {
+											var x = document.getElementById("myDIV");
+											if (x.style.display === "block") {
+												x.style.display = "none";
+											} else {
+												x.style.display = "block";
+											}
+										}
+									</script>
 								}
 							}
 						</div>
