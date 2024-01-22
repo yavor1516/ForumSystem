@@ -3,6 +3,8 @@
     public class HomeVeiwModel
     { 
         public IQueryable<Post> Posts { get; set; }
+
+        public User user { get; set; }
         public int registredUsers { get; set; }
 
         public int onlineUsers { get; set; }

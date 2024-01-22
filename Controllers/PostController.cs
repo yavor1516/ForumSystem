@@ -114,7 +114,9 @@ namespace ForumSystem.Controllers
                     {
                         Post = _forumDataService.GetPostByPostId(id),
                         notAuthenticated = true,
-                        User = _userDataService.GetByUsername(user)
+                        User = _userDataService.GetByUsername(user),
+                        registredUsers = _forumDataService.GetTotalUsersCount(),
+                        onlineUsers = _forumDataService.GetOnlineUsers()
 
                     };
                     return View(ViewModel);

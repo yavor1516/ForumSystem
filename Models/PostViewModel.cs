@@ -13,5 +13,9 @@ namespace ForumSystem.Models
 
         public string CommentContent {get;set;}
 
+        public int registredUsers { get; set; }
+
+        public int onlineUsers { get; set; }
+
     }
 }

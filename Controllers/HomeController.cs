@@ -122,6 +122,7 @@ namespace ForumSystem.Controllers
                     registredUsers = _forumDataService.GetTotalUsersCount(),
                     onlineUsers = _forumDataService.GetOnlineUsers(),
                     notAuthenticated = false
+
                 };
                 return View(viewModel);
             }
@@ -135,7 +136,8 @@ namespace ForumSystem.Controllers
                     Posts = _forumDataService.ShowAllPosts(),
                     registredUsers = _forumDataService.GetTotalUsersCount(),
                     onlineUsers = _forumDataService.GetOnlineUsers(),
-                     notAuthenticated = true
+                    notAuthenticated = true,
+                    user = _userDataService.GetByUsername(user)
 
                 };
                 return View(viewModel);

@@ -12,12 +12,14 @@ namespace ForumSystem.Controllers
         private readonly IAdminPanelService _adminPanelService;
         private readonly IUserRepository _userRepository;
         private readonly ITokenReader _tokenReader;
+        private readonly IForumDataService _forumDataService;
 
-        public AdminController(IAdminPanelService adminPanelService, IUserRepository userRepository,ITokenReader tokenReader)
+        public AdminController(IAdminPanelService adminPanelService, IUserRepository userRepository,ITokenReader tokenReader, IForumDataService forumDataService)
         {
             _userRepository = userRepository;
             _tokenReader = tokenReader;
             _adminPanelService = adminPanelService;
+            _forumDataService = forumDataService;
         }
 
         [HttpPost]
@@ -95,7 +97,10 @@ namespace ForumSystem.Controllers
                 var userRole = _tokenReader.GetToken(tokenAsText).FindFirst(ClaimTypes.Role)!.Value;
                 var viewModel = new AdminViewModel
                 {
-                    Users = _userRepository.GetAllUsers()
+                    Users = _userRepository.GetAllUsers(),
+                    user = _userRepository.GetUserByUsername(user),
+                    registredUsers = _forumDataService.GetTotalUsersCount(),
+                    onlineUsers = _forumDataService.GetOnlineUsers()
 
                 };
              
