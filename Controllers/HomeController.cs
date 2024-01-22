@@ -18,12 +18,14 @@ namespace ForumSystem.Controllers
         private readonly IForumDataService _forumDataService;
         private readonly IAccountService _accountService;
         private readonly ITokenReader _tokenReader;
-        public HomeController(IPostRepository postRepository,IForumDataService forumDataService , IAccountService accountService , ITokenReader tokenReader)
+        private readonly IEditPostService _editPostService;
+        public HomeController(IEditPostService editPostService,IPostRepository postRepository,IForumDataService forumDataService , IAccountService accountService , ITokenReader tokenReader)
         {
             _postRepository = postRepository;
             _forumDataService = forumDataService;
             _accountService = accountService;
             _tokenReader = tokenReader;
+            _editPostService = editPostService;
         }
 
 
@@ -34,7 +36,48 @@ namespace ForumSystem.Controllers
             return RedirectToAction("Index","Home");
         }
 
-        public IActionResult Index()
+		[HttpPost]
+		public IActionResult EditPost(int id, EditPostDTO editPostDTO)
+		{
+			try
+			{
+				var editedPost = _editPostService.EditPost(editPostDTO, id);
+				return RedirectToAction("Index", "Home");
+			}
+			catch (Exception ex)
+			{
+				// Handle the exception, e.g., log it and show an error message.
+				ModelState.AddModelError(string.Empty, "Error editing post: " + ex.Message);
+				return View(); // Return to a view where the user can try again.
+			}
+		}
+
+		[HttpPost]
+		public IActionResult DeletePost(int id)
+		{
+			try
+			{
+				bool result = _editPostService.DeletePost(id);
+				if (result)
+				{
+					return RedirectToAction("Index", "Home");
+				}
+				else
+				{
+					// Handle the case where post deletion was not successful.
+					ModelState.AddModelError(string.Empty, "Error deleting post.");
+					return View(); // Return to a view or show an error message.
+				}
+			}
+			catch (Exception ex)
+			{
+				// Handle the exception, e.g., log it and show an error message.
+				ModelState.AddModelError(string.Empty, "Error deleting post: " + ex.Message);
+				return View(); // Return to a view where the user can try again.
+			}
+		}
+
+		public IActionResult Index()
         {
             var cookie = HttpContext.Request.Cookies;
             var tokenAsText = cookie["access_token"];

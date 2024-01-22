@@ -15,6 +15,7 @@ namespace ForumSystem.Controllers
         private readonly IEditPostService _editPostService;
         private readonly ICreateCommentService _createCommentService;
         private readonly IPostVoteService _postVoteService;
+       
 		public PostController(IForumDataService forumDataService, ITokenReader tokenReader, IUserDataService userDataService, IEditPostService editPostService, ICreateCommentService createCommentService, IPostVoteService postVoteService)
 		{
 			_forumDataService = forumDataService;
@@ -33,7 +34,9 @@ namespace ForumSystem.Controllers
             // Redirect or return a response as needed
             return RedirectToAction("Index", "Home");
         }
-        [HttpPost]
+
+
+		[HttpPost]
         //public IActionResult EditComment(int itemId, PostViewModel postview)
         public IActionResult EditComment([FromForm] EditedCommentModel model)
         {

@@ -223,6 +223,23 @@
 								
 							</div>
 						</form>
+
+						 <!-- Edit Post Button -->
+            <form method="post" action="/home/editpost/@Model.Post.PostID">
+    @Html.HiddenFor(model => model.Post.PostID) <!-- Include the PostID as a hidden field -->
+    <div class="form-group">
+        <label for="content">Edit Post:</label>
+        <textarea class="form-control" id="content" name="content">@Model.Post.Title</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary rounded-pill">Update Post</button>
+</form>
+
+
+            <!-- Delete Post Button -->
+            <form method="post" action="/home/deletepost/@Model.Post.PostID">
+                <input type="hidden" name="postId" value="@Model.Post.PostID" />
+                <button type="submit" class="btn btn-danger rounded-pill">Delete Post</button>
+            </form>
 						
 
 					</div>
