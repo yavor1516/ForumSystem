@@ -150,15 +150,11 @@
                                         <button class="ffs">Read more</button>
                                     </a>
 
-                                    <i class="fa-regular fa-eye">
-                                        <span>33</span>
-                                    </i>
+                                    
                                     <i class="fa-regular fa-thumbs-up">
-                                        <span>12</span>
+                                        <span>@post.UpVote</span>
                                     </i>
-                                    <i class="fa-regular fa-thumbs-down">
-                                        <span>3</span>
-                                    </i>
+                                  
 
                                 </div>
                                 @{
@@ -172,7 +168,17 @@
 
                                         // Calculate the time difference
                                         TimeSpan timeDifference = currentDate.Subtract(specifiedDate);
-
+                                        int[] dates = new int[2];
+                                        if(timeDifference.TotalDays > 600)
+                                        {
+                                            dates[0] = 0;
+                                            dates[1] = 0;
+                                        }
+                                        else
+                                        {
+                                            dates[0] = timeDifference.Days;
+                                            dates[1] = timeDifference.Hours;
+                                        }
                                         // Display the time difference (Note: Console.WriteLine won't work here)
                                         // You might want to log or output this information differently depending on your application.
                                         // For example: Debug.WriteLine("Time difference: " + timeDifference);
@@ -180,9 +186,8 @@
                                         // Access individual components of the time difference if needed
 
                                         // Return the formatted string
-                                        int[] dates = new int[2];
-                                        dates[0] = timeDifference.Days;
-                                        dates[1] = timeDifference.Hours;
+                                       
+                                       
                                         return dates;
                                     }
 
@@ -337,15 +342,11 @@
                                 <div class="readmore-container">
                                     <button class="ffs">Read more</button>
 
-                                    <i class="fa-regular fa-eye">
-                                        <span>33</span>
-                                    </i>
+                                   
                                     <i class="fa-regular fa-thumbs-up">
-                                        <span>12</span>
+                                        <span>@post.UpVote</span>
                                     </i>
-                                    <i class="fa-regular fa-thumbs-down">
-                                        <span>3</span>
-                                    </i>
+                                
 
                                 </div>
                                 @{

@@ -19,17 +19,19 @@ namespace ForumSystem.Controllers
         private readonly IAccountService _accountService;
         private readonly ITokenReader _tokenReader;
         private readonly IEditPostService _editPostService;
-        public HomeController(IEditPostService editPostService,IPostRepository postRepository,IForumDataService forumDataService , IAccountService accountService , ITokenReader tokenReader)
-        {
-            _postRepository = postRepository;
-            _forumDataService = forumDataService;
-            _accountService = accountService;
-            _tokenReader = tokenReader;
-            _editPostService = editPostService;
-        }
+        private readonly IUserDataService _userDataService;
+		public HomeController(IEditPostService editPostService, IPostRepository postRepository, IForumDataService forumDataService, IAccountService accountService, ITokenReader tokenReader, IUserDataService userDataService)
+		{
+			_postRepository = postRepository;
+			_forumDataService = forumDataService;
+			_accountService = accountService;
+			_tokenReader = tokenReader;
+			_editPostService = editPostService;
+			_userDataService = userDataService;
+		}
 
 
-        [HttpPost]
+		[HttpPost]
         public IActionResult CreatePost(Post post)
         {
             _postRepository.CreatePost(post);
@@ -39,9 +41,24 @@ namespace ForumSystem.Controllers
 		[HttpPost]
 		public IActionResult EditPost(int id, EditPostDTO editPostDTO)
 		{
+
 			try
 			{
-				var editedPost = _editPostService.EditPost(editPostDTO, id);
+				var cookie = HttpContext.Request.Cookies;
+				var tokenAsText = cookie["access_token"];
+
+                if (tokenAsText != null)
+                {
+                    var user = _tokenReader.GetToken(tokenAsText).FindFirst(ClaimTypes.Name)?.Value;
+					var userRole = _tokenReader.GetToken(tokenAsText).FindFirst(ClaimTypes.Role)?.Value;
+					if (_editPostService.GetPostById(id).UserID == _userDataService.GetByUsername(user).UserID || userRole == "True")
+                    {
+						var editedPost = _editPostService.EditPost(editPostDTO, id);
+						return RedirectToAction("Index", "Home");
+					}
+						
+				    return RedirectToAction("Index", "Home");
+				}
 				return RedirectToAction("Index", "Home");
 			}
 			catch (Exception ex)
@@ -57,17 +74,31 @@ namespace ForumSystem.Controllers
 		{
 			try
 			{
-				bool result = _editPostService.DeletePost(id);
-				if (result)
-				{
+				var cookie = HttpContext.Request.Cookies;
+				var tokenAsText = cookie["access_token"];
+
+                if (tokenAsText != null)
+                {
+                    var user = _tokenReader.GetToken(tokenAsText).FindFirst(ClaimTypes.Name)?.Value;
+
+					var userRole = _tokenReader.GetToken(tokenAsText).FindFirst(ClaimTypes.Role)?.Value;
+					if (_editPostService.GetPostById(id).UserID == _userDataService.GetByUsername(user).UserID || userRole == "True")
+					{
+					bool result = _editPostService.DeletePost(id);
+					if (result)
+					{
+						return RedirectToAction("Index", "Home");
+					}
+					else
+					{
+						// Handle the case where post deletion was not successful.
+						ModelState.AddModelError(string.Empty, "Error deleting post.");
+						return View(); // Return to a view or show an error message.
+					}
 					return RedirectToAction("Index", "Home");
 				}
-				else
-				{
-					// Handle the case where post deletion was not successful.
-					ModelState.AddModelError(string.Empty, "Error deleting post.");
-					return View(); // Return to a view or show an error message.
 				}
+
 			}
 			catch (Exception ex)
 			{
@@ -75,6 +106,7 @@ namespace ForumSystem.Controllers
 				ModelState.AddModelError(string.Empty, "Error deleting post: " + ex.Message);
 				return View(); // Return to a view where the user can try again.
 			}
+			return RedirectToAction("Index", "Home");
 		}
 
 		public IActionResult Index()
