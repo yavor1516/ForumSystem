@@ -51,26 +51,33 @@ namespace ForumSystem.Controllers
             try
             {
                 var user = _accountService.LoginUser(loginRequest);
-
+                User userToUpdate = _userDataService.GetByUsername(user.Username);
+                if (userToUpdate.isBlocked == true)
+                {
+                    return Redirect("https://i.kym-cdn.com/entries/icons/original/000/026/489/crying.jpg");
+                }
                 AuthenticatedUserResponse token = new AuthenticatedUserResponse()
                 {
                     accessToken = _accountService.GenerateToken(user)
                 };
-              //  HttpContext.Response.Headers.Add("Authorization", "Bearer " + token.accessToken);
-                HttpContext.Response.Cookies.Append("access_token", token.accessToken, new CookieOptions { HttpOnly = true });
+             
+                //  HttpContext.Response.Headers.Add("Authorization", "Bearer " + token.accessToken);
+               
                 var tokenTest = new JwtSecurityTokenHandler().ReadJwtToken(token.accessToken);
                 //var identity = (ClaimsIdentity)User.Identity;
                 //identity.AddClaims(tokenTest.Claims);
                 var identity = new ClaimsPrincipal(new ClaimsIdentity(tokenTest.Claims));
+                HttpContext.Response.Cookies.Append("access_token", token.accessToken, new CookieOptions { HttpOnly = true });
                 //HttpContext.User.AddIdentity(identity);
 
                 // Store the access token in an HttpOnly cookie
                 //  var token = HttpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-                User userToUpdate = _userDataService.GetByUsername(user.Username);
+
                 userToUpdate.isOnline = true;
                 _forumDataService.UpdateUserStatus(userToUpdate);
                 return RedirectToAction("Index", "Home");
-                
+             
+
             }
             catch (Exception e)
             {

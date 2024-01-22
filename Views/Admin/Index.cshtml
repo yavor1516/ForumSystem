@@ -189,8 +189,32 @@
                 }
             </tbody>
         </table>
-        <button class="btn btn-danger" onclick="updateUserStatus(true)">Block</button>
-        <button class="btn btn-success" onclick="updateUserStatus(false)">Unblock</button>
+
+        
+        <form method="post" id="blockForm">
+            <div class="form-group">
+                <input type="text" class="form-control" name="username" value=""placeholder="type username here..." />
+                <button type="button" class="btn btn-danger" onclick="submitForm('block')">Block</button>
+                <button type="button" class="btn btn-success" onclick="submitForm('unblock')">Unblock</button>
+            </div>
+        </form>
+
+        <script>
+            function submitForm(action) {
+                // Get the form element
+                var form = $('#blockForm');
+
+                // Set the action based on the button clicked
+                if (action === 'block') {
+                    form.attr('action', '/admin/blockUser/');
+                } else if (action === 'unblock') {
+                    form.attr('action', '/admin/unBlockUser/');
+                }
+
+                // Submit the form
+                form.submit();
+            }
+        </script>
     </div>
 
     <script>
@@ -205,6 +229,7 @@
         }
     </script>
     <!-- Existing footer and script tags -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </body>
 </html>
 

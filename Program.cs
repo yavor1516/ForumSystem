@@ -85,6 +85,14 @@ namespace ForumSystem
                  pattern: "post/delete/{itemId:int}", // Change the pattern to be more specific
                  defaults: new { controller = "Post", action = "Delete" });
             app.MapControllerRoute(
+                name: "blockUser",
+                pattern: "admin/blockUser/{content?}", // Change the pattern to be more specific
+                defaults: new { controller = "Admin", action = "BlockUser" });
+            app.MapControllerRoute(
+               name: "unBlockUser",
+               pattern: "admin/unBlockUser/{content?}", // Change the pattern to be more specific
+               defaults: new { controller = "Admin", action = "UnBlockUser" });
+            app.MapControllerRoute(
              name: "editComment",
              pattern: "post/edit/{itemId:int}/{content?}", // Updated pattern for editing
              defaults: new { controller = "Post", action = "EditComment" });
@@ -99,6 +107,7 @@ namespace ForumSystem
 			app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+
 
             //  app.MapGet("/", () => "Hello World!");
             app.UseStaticFiles();

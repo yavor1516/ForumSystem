@@ -20,7 +20,71 @@ namespace ForumSystem.Controllers
             _adminPanelService = adminPanelService;
         }
 
-       
+        [HttpPost]
+        public IActionResult BlockUser(AdminViewModel model)
+        {
+            var cookie = HttpContext.Request.Cookies;
+            var tokenAsText = cookie["access_token"];
+
+          
+                try
+            {
+                if (tokenAsText != null)
+                {
+                    var user = _tokenReader.GetToken(tokenAsText).FindFirst(ClaimTypes.Name)?.Value;
+                  
+                    var userRole = _tokenReader.GetToken(tokenAsText).FindFirst(ClaimTypes.Role)?.Value;
+
+                    if (user != null && userRole == "True")
+                    {
+                        var userToBlock = _adminPanelService.BlockUser(model.username);
+
+                        return RedirectToAction($"");
+
+                    }
+                }
+                return Unauthorized();
+
+
+            }
+            catch (Exception e)
+            {
+                return Conflict(new Exception("user doenst exist!!"));
+            }
+        }
+
+        [HttpPost]
+        public IActionResult UnBlockUser(AdminViewModel model)
+        {
+            var cookie = HttpContext.Request.Cookies;
+            var tokenAsText = cookie["access_token"];
+
+
+            try
+            {
+                if (tokenAsText != null)
+                {
+                    var user = _tokenReader.GetToken(tokenAsText).FindFirst(ClaimTypes.Name)?.Value;
+
+                    var userRole = _tokenReader.GetToken(tokenAsText).FindFirst(ClaimTypes.Role)?.Value;
+
+                    if (user != null && userRole == "True")
+                    {
+                        var userToBlock = _adminPanelService.UnBlockUser(model.username);
+
+                        return RedirectToAction($"");
+
+                    }
+                }
+                return Unauthorized();
+
+
+            }
+            catch (Exception e)
+            {
+                return Conflict(new Exception("user doenst exist!!"));
+            }
+        }
         public IActionResult Index()
         {
             try

@@ -95,6 +95,7 @@ namespace ForumSystem.Controllers
             }
 
             var user = _tokenReader.GetToken(tokenAsText).FindFirst(ClaimTypes.Name)?.Value;
+            
             if(user != null)
             {
                 var viewModel = new HomeVeiwModel
