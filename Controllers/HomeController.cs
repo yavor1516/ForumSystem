@@ -31,10 +31,6 @@ namespace ForumSystem.Controllers
         public IActionResult CreatePost(Post post)
         {
             _postRepository.CreatePost(post);
-            // Handle the form submission here
-            // You can use postTitle, postContent, and postVisibility to create a new post
-
-            // Redirect to a different action/view after handling the form data
             return RedirectToAction("Index","Home");
         }
 
