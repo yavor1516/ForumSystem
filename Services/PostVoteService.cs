@@ -39,6 +39,7 @@ namespace ForumSystem.Services
 		
 			post.DownVote = _voteRepositorycs.GetPostDownVotes(id);
 
+			
 			_postRepository.Update(id, post);
            
         }
@@ -93,7 +94,7 @@ namespace ForumSystem.Services
 					UserID = _userDataService.GetByUsername(username).UserID
 				};
 				vote.liked = null;
-				vote.views = 10;
+
 				_voteRepositorycs.UpdateVote(_voteRepositorycs.GetVoteTableByPostIdAndUsername(postId,username).VoteID, vote);
 				Like(postId);
 				
