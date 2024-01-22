@@ -63,7 +63,7 @@ header {
 .sticky-top {
   
     top: 20%; /* Adjust this value as needed, particularly if you have a fixed header/navbar */
-    z-index: 200; /* Ensures the sidebar is above other elements but below fixed components like modals */
+    z-index: -1; /* Ensures the sidebar is above other elements but below fixed components like modals */
     height: 100%; /*regulating*/
 }
 

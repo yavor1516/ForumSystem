@@ -1,10 +1,12 @@
-﻿@{
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using ForumSystem.Models
+@model HomeVeiwModel
+
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
-@using ForumSystem.Models
-@model HomeVeiwModel
 
 <head>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css">
@@ -29,19 +31,19 @@
                 </div>
                 <div class="card-body">
                     <!-- Form for creating a new post -->
-                    <form>
+                    <form asp-controller="Home" asp-action="CreatePost" method="post">
                         <div class="form-group">
                             <label for="postTitle">Title</label>
-                            <input type="text" class="form-control" id="postTitle" placeholder="Enter post title">
+                                <input type="text" class="form-control" id="postTitle" name="Title" placeholder="Enter post title">
                         </div>
                         <div class="form-group">
                             <label for="postContent">Content</label>
-                            <textarea class="form-control" id="postContent" rows="3"></textarea>
+                                <textarea class="form-control" id="postContent" name="Content" rows="3"></textarea>
                         </div>
 
                         <!-- Toggle switch -->
                         <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="postVisibility">
+                                <input type="checkbox" class="custom-control-input" id="postVisibility" name="isPublic">
                             <label class="custom-control-label mt-2 mb-2" for="postVisibility">Public</label>
                         </div>
                         
