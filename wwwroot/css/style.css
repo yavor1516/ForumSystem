@@ -119,7 +119,36 @@ header {
     color: white;
 }
 
+.clock {
+    position: relative;
+    margin: 50px auto;
+    width: 200px;
+    height: 200px;
+    border: 8px solid black;
+    border-radius: 50%;
+    background: url('https://cdn.bmwblog.com/wp-content/uploads/2015/12/A-Yas-Marina-Blue-BMW-F82-M4-With-A-Lightweight-Upgrade-6.jpg') no-repeat center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+    box-sizing: border-box;
+}
 
+.digital-clock, .digital-date {
+    color: white;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.digital-clock {
+    font-size: 1.5em;
+    margin-bottom: 0.5em;
+}
+
+.digital-date {
+    font-size: 1em;
+}
 
 
 

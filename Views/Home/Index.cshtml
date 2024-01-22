@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
 </head>
-
+<body>
 <main role="main" class="container mt-4">
     <div class="row">
         <!-- Main content area -->
@@ -470,43 +470,44 @@
             }
         </style>
 
-        <div class="card-mb-4">
-            <div class="card-header">
-                Hot Topics
-            </div>
-            <div class="list-group list-group-flush">
-                @foreach (var post in Model.Posts)
-                {
-                    <div class="post-container">
-                        <a class="btn btn-light">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 48 48" height="32" width="32"><g id="search-comment-history"><path id="Subtract" fill="#8fbffa" d="M7.143 0.966C10.408 0.74 15.597 0.5 23 0.5c7.403 0 12.592 0.239 15.857 0.466 3.265 0.228 5.861 2.693 6.152 5.993 0.249 2.835 0.491 7.115 0.491 13.041 0 2.952 -0.06 5.495 -0.151 7.654A12.996 12.996 0 0 0 34 21c-7.18 0 -13 5.82 -13 13 0 2.166 0.53 4.208 1.467 6.004l-6.19 5.305c-2.27 1.946 -5.777 0.333 -5.777 -2.657V39.23a166.88 166.88 0 0 1 -3.357 -0.196c-3.265 -0.228 -5.862 -2.693 -6.152 -5.993C0.742 30.206 0.5 25.926 0.5 20S0.742 9.794 0.991 6.959c0.29 -3.3 2.887 -5.765 6.152 -5.993Z" stroke-width="1"></path><g id="Vector"><path fill="#2859c5" fill-rule="evenodd" d="M9 12a2 2 0 0 1 2 -2h24a2 2 0 1 1 0 4H11a2 2 0 0 1 -2 -2Z" clip-rule="evenodd" stroke-width="1"></path><path fill="#2859c5" fill-rule="evenodd" d="M9 22a2 2 0 0 1 2 -2h10a2 2 0 1 1 0 4H11a2 2 0 0 1 -2 -2Z" clip-rule="evenodd" stroke-width="1"></path></g><path id="Union" fill="#2859c5" d="M42.885 38.594A9.958 9.958 0 0 0 44 34c0 -5.523 -4.477 -10 -10 -10s-10 4.477 -10 10 4.477 10 10 10c1.69 0 3.281 -0.42 4.677 -1.159 0.93 1.121 1.854 2.226 2.873 3.318 1.081 1.157 2.718 1.3 3.863 0.206a31.861 31.861 0 0 0 1.017 -1.018c1.095 -1.144 0.952 -2.78 -0.206 -3.862 -1.098 -1.026 -2.21 -1.955 -3.34 -2.891Z" stroke-width="1"></path><path id="Union_2" fill="#8fbffa" d="M34 29a5 5 0 1 0 0 10 5 5 0 0 0 0 -10Z" stroke-width="1"></path></g></svg>
-                        </a>
-                        <h5 class="post-title">@post.Title</h5>
-                    </div>
-                    <div class="content-container">
-                        <p class="post-content">@post.Content</p>
-                    </div>
-                    <div class="readmore-container">
-                        <button class="ffs">Read more</button>
-
-                      
-                        <i class="fa-regular fa-thumbs-up">
-                            <span>@post.UpVote</span>
-                        </i>
-                       
-
-                    </div>
-                }
-            </div>
-        </div>
+       
        
         <!-- Sidebar -->
-        <div class="col-md-4 sticky-top">
-            <!-- Hot Topics Section -->
-       
-           
-        </div>
+       <div class="col-md-4 sticky-top">
+    <!-- Real World Time Clock Section -->
+    <div class="clock">
+    <div id="digital-clock" class="digital-clock">00:00:00</div>
+    <div id="digital-date" class="digital-date">January 1, 2024</div>
+</div>
+
+</div>
+
+
     </div>
 </main>
+<script>
+function updateClock() {
+    var now = new Date();
+    var hours = now.getHours().toString().padStart(2, '0');
+    var minutes = now.getMinutes().toString().padStart(2, '0');
+    var seconds = now.getSeconds().toString().padStart(2, '0');
+    var timeString = hours + ':' + minutes + ':' + seconds;
+
+    var monthNames = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+    var day = now.getDate();
+    var monthIndex = now.getMonth();
+    var year = now.getFullYear();
+    var dateString = monthNames[monthIndex] + ' ' + day + ', ' + year;
+
+    document.getElementById('digital-clock').textContent = timeString;
+    document.getElementById('digital-date').textContent = dateString;
+}
+
+setInterval(updateClock, 1000);
+updateClock(); // Initialize the clock
+</script>
+</body>
 
 
