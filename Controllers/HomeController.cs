@@ -1,5 +1,6 @@
 ﻿using ForumSystem.Helpers;
 using ForumSystem.Models;
+using ForumSystem.Models.DTO;
 using ForumSystem.Repositories;
 using ForumSystem.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -26,8 +27,17 @@ namespace ForumSystem.Controllers
         }
 
 
-      
-       
+        [HttpPost]
+        public IActionResult CreatePost(Post post)
+        {
+            _postRepository.CreatePost(post);
+            // Handle the form submission here
+            // You can use postTitle, postContent, and postVisibility to create a new post
+
+            // Redirect to a different action/view after handling the form data
+            return RedirectToAction("Index","Home");
+        }
+
         public IActionResult Index()
         {
             var cookie = HttpContext.Request.Cookies;
