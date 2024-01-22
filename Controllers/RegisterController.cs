@@ -50,7 +50,7 @@ namespace ForumSystem.Controllers
             {
                 _accountService.RegisterUser(registerModel);
 
-                return Ok();
+                return RedirectToAction("Index", "Login");
             }
             catch (DuplicateEntityException e)
             {
