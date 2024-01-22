@@ -19,19 +19,13 @@ namespace ForumSystem.Controllers.Api
         }
 
         [HttpPut("like/{id}")]
-        public IActionResult LikePost(int id)
+        public IActionResult LikePost(int id, int value)
         {
             try
             {
-               // var user = User.FindFirst(ClaimTypes.Name)?.Value;
-               // var userRole = User.FindFirst(ClaimTypes.Role)!.Value;
-
-                if(_postVoteService.Like(id) != null)
-                {
-                   
-                    return Ok();
-                }
-
+                // var user = User.FindFirst(ClaimTypes.Name)?.Value;
+                // var userRole = User.FindFirst(ClaimTypes.Role)!.Value;
+                return Ok();
               
 
                 //if (user != null && _editPostService.GetPostById(id).User.Username == user.ToString() || userRole == "True")
@@ -51,19 +45,17 @@ namespace ForumSystem.Controllers.Api
             }
         }
         [HttpPut("dislike/{id}")]
-        public IActionResult DislikePost(int id)
+        public IActionResult DislikePost(int id, int value)
         {
             try
             {
                 // var user = User.FindFirst(ClaimTypes.Name)?.Value;
                 // var userRole = User.FindFirst(ClaimTypes.Role)!.Value;
 
-                if (_postVoteService.Dislike(id) != null)
-                {
+        
 
                     return Ok();
-                }
-
+              
 
 
                 //if (user != null && _editPostService.GetPostById(id).User.Username == user.ToString() || userRole == "True")

@@ -53,7 +53,7 @@ namespace ForumSystem
             builder.Services.AddScoped<IPostRepository, PostRepository>();
           
             builder.Services.AddScoped<IForumDataService, ForumDataService>();
-
+            builder.Services.AddScoped<IVoteRepositorycs,VoteRepositorycs>();
             builder.Services.AddScoped<IModelMapper, ModelMapper>();
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<AccessTokenGenerator>();
@@ -66,6 +66,7 @@ namespace ForumSystem
             builder.Services.AddScoped<IPostService, PostService>();
             builder.Services.AddScoped<IPostVoteService, PostVoteService>();
             builder.Services.AddScoped<IAdminPanelService, AdminPanelService>();
+            builder.Services.AddScoped<IPostVoteService,PostVoteService>();
             var app = builder.Build();
 
             //Here we fill DB with information for testing
@@ -91,6 +92,10 @@ namespace ForumSystem
 			name: "createComment",
 			pattern: "post/createComment/{content?}", // Updated pattern for editing
 			defaults: new { controller = "Post", action = "CreateComment" });
+			app.MapControllerRoute(
+			name: "createVote",
+			pattern: "post/createVote/{content?}", // Updated pattern for editing
+			defaults: new { controller = "Post", action = "Vote" });
 			app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");

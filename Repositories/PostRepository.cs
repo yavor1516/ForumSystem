@@ -17,6 +17,7 @@ namespace ForumSystem.Repositories
         //IQueryable<Post>
         public IQueryable<Post> GetAllPosts()
         {
+
             return _dbcontext.Posts.Where(x=>x.IsDeleted == null || false).Include(p => p.Comments).Include(u=>u.User);
         }
 

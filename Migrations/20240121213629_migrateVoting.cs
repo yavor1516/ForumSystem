@@ -4,22 +4,22 @@
 
 namespace ForumSystem.Migrations
 {
-    public partial class addIsDeletedToPosts : Migration
+    public partial class migrateVoting : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<bool>(
-                name: "isDeleted",
-                table: "Posts",
-                type: "bit",
+            migrationBuilder.AddColumn<string>(
+                name: "views",
+                table: "Votes",
+                type: "nvarchar(max)",
                 nullable: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "isDeleted",
-                table: "Posts");
+                name: "views",
+                table: "Votes");
         }
     }
 }

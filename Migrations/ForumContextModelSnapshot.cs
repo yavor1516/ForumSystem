@@ -170,6 +170,35 @@ namespace ForumSystem.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("ForumSystem.Models.VoteTable", b =>
+                {
+                    b.Property<int>("VoteID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VoteID"), 1L, 1);
+
+                    b.Property<int?>("PostID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserID")
+                        .HasColumnType("int");
+
+                    b.Property<bool?>("liked")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("views")
+                        .HasColumnType("int");
+
+                    b.HasKey("VoteID");
+
+                    b.HasIndex("PostID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("Votes");
+                });
+
             modelBuilder.Entity("ForumSystem.Models.Comment", b =>
                 {
                     b.HasOne("ForumSystem.Models.Post", null)
@@ -197,6 +226,21 @@ namespace ForumSystem.Migrations
                     b.HasOne("ForumSystem.Models.Post", null)
                         .WithMany("Tags")
                         .HasForeignKey("PostID");
+                });
+
+            modelBuilder.Entity("ForumSystem.Models.VoteTable", b =>
+                {
+                    b.HasOne("ForumSystem.Models.Post", "Post")
+                        .WithMany()
+                        .HasForeignKey("PostID");
+
+                    b.HasOne("ForumSystem.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserID");
+
+                    b.Navigation("Post");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ForumSystem.Models.Post", b =>

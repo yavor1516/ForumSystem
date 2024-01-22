@@ -14,15 +14,17 @@ namespace ForumSystem.Controllers
         private readonly IUserDataService _userDataService;
         private readonly IEditPostService _editPostService;
         private readonly ICreateCommentService _createCommentService;
-        public PostController(IForumDataService forumDataService, ITokenReader tokenReader, IUserDataService userDataService, IEditPostService editPostService, ICreateCommentService createCommentService)
-        {
-            _forumDataService = forumDataService;
-            _tokenReader = tokenReader;
-            _userDataService = userDataService;
-            _editPostService = editPostService;
-            _createCommentService = createCommentService;
-        }
-        [HttpPost]
+        private readonly IPostVoteService _postVoteService;
+		public PostController(IForumDataService forumDataService, ITokenReader tokenReader, IUserDataService userDataService, IEditPostService editPostService, ICreateCommentService createCommentService, IPostVoteService postVoteService)
+		{
+			_forumDataService = forumDataService;
+			_tokenReader = tokenReader;
+			_userDataService = userDataService;
+			_editPostService = editPostService;
+			_createCommentService = createCommentService;
+			_postVoteService = postVoteService;
+		}
+		[HttpPost]
         public IActionResult Delete(int itemId)
         {
 
@@ -67,6 +69,29 @@ namespace ForumSystem.Controllers
             // Redirect or return a response as needed
 
         }
+        [HttpPost]
+        public IActionResult Vote([FromForm] CreateVote model)
+        {
+			var cookie = HttpContext.Request.Cookies;
+			var tokenAsText = cookie["access_token"];
+
+			if (tokenAsText != null)
+			{
+				var user = _tokenReader.GetToken(tokenAsText).FindFirst(ClaimTypes.Name)?.Value;
+				var userisBlocked = User.FindFirst(ClaimTypes.UserData)?.Value;
+				if (userisBlocked != "True")
+				{
+                    //_createCommentService.CreateComment(model, user);
+                    _postVoteService.CreateVote(model.PostId, model.UserId);
+					return RedirectToAction($"{model.PostId}");
+
+				}
+
+				//  updatedComment.Content = model.Content ?? "noupdate";// postview.CommentContent;
+				//_editPostService.EditComment(model.CommentID, updatedComment);
+			}
+			return RedirectToAction("Index", "Home");
+		}
   
         public IActionResult Index(int id)
         {
